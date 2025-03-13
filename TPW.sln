@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPW", "TPW\TPW.csproj", "{D3116A47-4DDB-415E-83F5-156F6AE8860D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "Elementy rozwiązania", "{8FB176BD-0036-D269-15EA-F86E90622887}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3116A47-4DDB-415E-83F5-156F6AE8860D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3116A47-4DDB-415E-83F5-156F6AE8860D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3116A47-4DDB-415E-83F5-156F6AE8860D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3116A47-4DDB-415E-83F5-156F6AE8860D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FBC1DD2-4ABB-4979-A61D-425CFEA7E66D}
+	EndGlobalSection
+EndGlobal
