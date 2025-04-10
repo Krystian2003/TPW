@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementy rozwiązania", "El
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationView", "PresentationView\PresentationView.csproj", "{E3A6E551-629D-41D2-B44A-3CE39C0A1E00}"
 	ProjectSection(ProjectDependencies) = postProject
-		{A177D52B-2297-44D3-96F4-F14573791745} = {A177D52B-2297-44D3-96F4-F14573791745}
+		{8724F466-9FCC-40F7-87C8-D3076ED834EC} = {8724F466-9FCC-40F7-87C8-D3076ED834EC}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{32BF05E8-5553-4572-9166-0F0073532AE4}"
@@ -34,6 +34,26 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "BusinessLogic\Logic.csproj", "{A177D52B-2297-44D3-96F4-F14573791745}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32BF05E8-5553-4572-9166-0F0073532AE4} = {32BF05E8-5553-4572-9166-0F0073532AE4}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationViewModel", "PresentationViewModel\PresentationViewModel.csproj", "{8724F466-9FCC-40F7-87C8-D3076ED834EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E906F95C-44DD-40E7-8504-1766672655CC} = {E906F95C-44DD-40E7-8504-1766672655CC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationModel", "PresentationModel\PresentationModel.csproj", "{E906F95C-44DD-40E7-8504-1766672655CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A177D52B-2297-44D3-96F4-F14573791745} = {A177D52B-2297-44D3-96F4-F14573791745}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationModelTest", "PresentationModelTest\PresentationModelTest.csproj", "{FBE8B947-F0A7-4563-9F4D-F2196A654EFD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E906F95C-44DD-40E7-8504-1766672655CC} = {E906F95C-44DD-40E7-8504-1766672655CC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationViewModelTest", "PresentationViewModelTest\PresentationViewModelTest.csproj", "{A95B9336-4966-4604-B40C-178F2F9F3BE6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8724F466-9FCC-40F7-87C8-D3076ED834EC} = {8724F466-9FCC-40F7-87C8-D3076ED834EC}
 	EndProjectSection
 EndProject
 Global
@@ -66,6 +86,22 @@ Global
 		{A177D52B-2297-44D3-96F4-F14573791745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A177D52B-2297-44D3-96F4-F14573791745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A177D52B-2297-44D3-96F4-F14573791745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8724F466-9FCC-40F7-87C8-D3076ED834EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8724F466-9FCC-40F7-87C8-D3076ED834EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8724F466-9FCC-40F7-87C8-D3076ED834EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8724F466-9FCC-40F7-87C8-D3076ED834EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E906F95C-44DD-40E7-8504-1766672655CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E906F95C-44DD-40E7-8504-1766672655CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E906F95C-44DD-40E7-8504-1766672655CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E906F95C-44DD-40E7-8504-1766672655CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBE8B947-F0A7-4563-9F4D-F2196A654EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBE8B947-F0A7-4563-9F4D-F2196A654EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBE8B947-F0A7-4563-9F4D-F2196A654EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBE8B947-F0A7-4563-9F4D-F2196A654EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95B9336-4966-4604-B40C-178F2F9F3BE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95B9336-4966-4604-B40C-178F2F9F3BE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95B9336-4966-4604-B40C-178F2F9F3BE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95B9336-4966-4604-B40C-178F2F9F3BE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
