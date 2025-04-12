@@ -9,7 +9,8 @@ namespace PresentationView
 {
     public partial class MainWindow : Window
     {
-        private readonly BallRenderer _ballRenderer;
+
+        private readonly BilliardViewModel _ballRenderer = new BilliardViewModel();
         private readonly DispatcherTimer _timer;
         private readonly List<Ellipse> _ballVisuals = new List<Ellipse>();
 
@@ -17,7 +18,7 @@ namespace PresentationView
         {
             InitializeComponent();
 
-            _ballRenderer = new BallRenderer();
+            _ballRenderer.CreateBall(100, 100, 10, "Red");
 
             InitializeBallVisuals();
 
@@ -25,7 +26,11 @@ namespace PresentationView
             {
                 Interval = TimeSpan.FromMilliseconds(16)
             };
-            _timer.Tick += UpdateBalls;
+            _timer.Tick += (s, e) =>
+            {
+                _ballRenderer.Update();
+                UpdateBalls();
+            };
             _timer.Start();
         }
 
@@ -53,7 +58,7 @@ namespace PresentationView
             }
         }
 
-        private void UpdateBalls(object sender, EventArgs e)
+        private void UpdateBalls()
         {
             var balls = _ballRenderer.Balls.ToArray();
 
