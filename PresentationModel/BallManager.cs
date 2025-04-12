@@ -31,9 +31,9 @@ namespace PresentationModel
             }
         }
 
-        public void UpdatePositions()
+        public void UpdatePositions(double deltaTime)
         {
-            _logic.UpdateBallPositions();
+            _logic.UpdateBallPositions(deltaTime);
             var ballsData = _logic.GetBallsData().ToList();
 
             for (int i = 0; i < ballsData.Count; i++)

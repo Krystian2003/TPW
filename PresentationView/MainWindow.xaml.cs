@@ -11,7 +11,9 @@ namespace PresentationView
     {
 
         private readonly BilliardViewModel _ballRenderer = new BilliardViewModel();
-        private readonly DispatcherTimer _timer;
+        private readonly double _fixedDeltaTime = 1.0 / 60.0;
+        private double _accumulator = 0;
+        private DateTime _lastFrameTime;
         private readonly List<Ellipse> _ballVisuals = new List<Ellipse>();
 
         public MainWindow()
@@ -22,16 +24,24 @@ namespace PresentationView
 
             InitializeBallVisuals();
 
-            _timer = new DispatcherTimer
+            _lastFrameTime = DateTime.Now;
+            CompositionTarget.Rendering += OnRendering;
+        }
+        private void OnRendering(object? sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+            var deltaTime = (now - _lastFrameTime).TotalSeconds;
+            _lastFrameTime = now;
+
+            _accumulator += deltaTime;
+
+            while (_accumulator >= _fixedDeltaTime)
             {
-                Interval = TimeSpan.FromMilliseconds(16)
-            };
-            _timer.Tick += (s, e) =>
-            {
-                _ballRenderer.Update();
-                UpdateBalls();
-            };
-            _timer.Start();
+                _ballRenderer.Update(_fixedDeltaTime);
+                _accumulator -= _fixedDeltaTime;
+            }
+
+            UpdateBalls();
         }
 
         private void InitializeBallVisuals()

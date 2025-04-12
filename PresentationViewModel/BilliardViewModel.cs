@@ -1,7 +1,6 @@
 ﻿using PresentationModel;
 using System;
 using System.Collections.ObjectModel;
-using System.Timers;
 using System.Windows.Input;
 
 namespace PresentationViewModel
@@ -10,21 +9,17 @@ namespace PresentationViewModel
     public class BilliardViewModel
     {
         private readonly BallManager _ballManager;
-        private readonly System.Timers.Timer _updateTimer;
 
         public ObservableCollection<PresentationBall> Balls => _ballManager.Balls;
 
         public BilliardViewModel()
         {
             _ballManager = new BallManager();
-
-            _updateTimer = new System.Timers.Timer(16);
-            _updateTimer.Start();
         }
 
-        public void Update()
+        public void Update(double deltaTime)
         {
-            _ballManager.UpdatePositions();
+            _ballManager.UpdatePositions(deltaTime);
         }
 
         public void CreateBall(double x, double y, double radius, string color)

@@ -16,12 +16,12 @@ namespace BusinessLogic
             _balls.Add(new Ball(300, 300, 15, "Black")); 
         }
 
-        public void UpdateBallPositions()
+        public void UpdateBallPositions(double deltaTime)
         {
             foreach (var ball in _balls)
             {
-                ball.X += 1;
-                ball.Y += 1;
+                ball.X += 1 * deltaTime;
+                ball.Y += 1 * deltaTime;
             }
         }
 
