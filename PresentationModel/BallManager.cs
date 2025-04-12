@@ -33,6 +33,11 @@ namespace PresentationModel
             }
         }
 
+        public void SetTableSize(float width, float height)
+        {
+            _logic.SetTableSize(width, height);
+        }
+
         public void UpdatePositions(float deltaTime)
         {
             _logic.UpdateBallPositions(deltaTime);

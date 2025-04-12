@@ -17,6 +17,11 @@ namespace PresentationViewModel
             _ballManager = new BallManager();
         }
 
+        public void SetTableSize(float width, float height)
+        {
+            _ballManager.SetTableSize(width, height);
+        }
+
         public void Update(float deltaTime)
         {
             _ballManager.UpdatePositions(deltaTime);

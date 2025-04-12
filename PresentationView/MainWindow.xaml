@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationView"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="800">
+        Title="MainWindow" Height="400" Width="800"
+        Loaded="Window_Loaded">
     <Grid>
         <Canvas x:Name="canvas" Background="DarkGreen" Margin="10" />
     </Grid>

@@ -5,16 +5,21 @@ namespace BusinessLogic
 {
     public class Logic
     {
+        public Vector2 TableSize { get; set; } = new Vector2(800, 400);
+
         private readonly List<Ball> _balls = new List<Ball>();
 
         public void InitializeBalls()
         {
             _balls.Clear();
+            // ?
+        }
 
-            // delete or replace with th enew method
-            _balls.Add(new Ball(100, 100, 15, "White")); 
-            _balls.Add(new Ball(200, 200, 15, "Red"));   
-            _balls.Add(new Ball(300, 300, 15, "Black")); 
+        public void SetTableSize(float width, float height)
+        {
+            {
+                TableSize = new Vector2(width, height);
+            }
         }
 
         public void UpdateBallPositions(float deltaTime)
@@ -22,6 +27,8 @@ namespace BusinessLogic
             foreach (var ball in _balls)
             {
                 ball.Position += ball.Velocity * deltaTime;
+
+                BounceOffEdge(ball);
             }
         }
 
@@ -33,6 +40,18 @@ namespace BusinessLogic
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
         {
             return _balls.Select(b => (b.Position, b.Velocity, b.Radius, b.Color));
+        }
+
+         private void BounceOffEdge(Ball ball)
+         {
+            Vector2 minBounds = new Vector2(ball.Radius, ball.Radius);
+            Vector2 maxBounds = new Vector2(TableSize.X - ball.Radius, TableSize.Y - ball.Radius);
+
+            bool outOfBoundsX = ball.Position.X < minBounds.X || ball.Position.X > maxBounds.X;
+            bool outOfBoundsY = ball.Position.Y < minBounds.Y || ball.Position.Y > maxBounds.Y;
+
+            if (outOfBoundsX) ball.Velocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
+            if (outOfBoundsY) ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
         }
     }
 }

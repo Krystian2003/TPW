@@ -20,12 +20,15 @@ namespace PresentationView
         {
             InitializeComponent();
 
+            // change name since it handles more than just balls
             _ballRenderer.CreateBall(100, 100, 10, "Red");
 
             InitializeBallVisuals();
 
             _lastFrameTime = DateTime.Now;
             CompositionTarget.Rendering += OnRendering;
+
+            SizeChanged += MainWindow_SizeChanged;
         }
         private void OnRendering(object? sender, EventArgs e)
         {
@@ -80,6 +83,17 @@ namespace PresentationView
                 Canvas.SetLeft(visual, ball.X - ball.Radius);
                 Canvas.SetTop(visual, ball.Y - ball.Radius);
             }
+        }
+        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // Update the table size when the window is resized
+            _ballRenderer.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // possibly move the cast to logic instead
+            _ballRenderer.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
         }
     }
 }
