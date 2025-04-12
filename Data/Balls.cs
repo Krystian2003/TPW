@@ -1,16 +1,19 @@
-﻿namespace Data
+﻿using System.Numerics;
+
+namespace Data
 {
     public class Ball
     {
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Radius { get; set; }
-        public string Color { get; set; }
+        public Vector2 Position { get; set; }
+        public Vector2 Velocity { get; set; }
+        // should radius be a float?
+        public float Radius { get; set; }
+        public string Color { get; set; } 
 
-        public Ball(double x, double y, double radius, string color)
+        public Ball(float x, float y, float radius, string color)
         {
-            X = x;
-            Y = y;
+            Position = new Vector2(x, y);
+            Velocity = new Vector2(10.0f, 10.0f); //Vector2.Zero;
             Radius = radius;
             Color = color;
         }

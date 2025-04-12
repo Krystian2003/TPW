@@ -11,7 +11,7 @@ namespace PresentationView
     {
 
         private readonly BilliardViewModel _ballRenderer = new BilliardViewModel();
-        private readonly double _fixedDeltaTime = 1.0 / 60.0;
+        private readonly float _fixedDeltaTime = 1.0f / 60.0f;
         private double _accumulator = 0;
         private DateTime _lastFrameTime;
         private readonly List<Ellipse> _ballVisuals = new List<Ellipse>();

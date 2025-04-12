@@ -17,12 +17,12 @@ namespace PresentationViewModel
             _ballManager = new BallManager();
         }
 
-        public void Update(double deltaTime)
+        public void Update(float deltaTime)
         {
             _ballManager.UpdatePositions(deltaTime);
         }
 
-        public void CreateBall(double x, double y, double radius, string color)
+        public void CreateBall(float x, float y, float radius, string color)
         {
             _ballManager.AddBall(x, y, radius, color);
         }
