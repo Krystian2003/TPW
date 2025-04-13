@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace BusinessLogic
 {
-    public class Logic
+    public class Logic : ILogic
     {
         public Vector2 TableSize { get; set; } = new Vector2(800, 400);
 

@@ -8,10 +8,10 @@ namespace PresentationModel
 {
     public class BallManager : INotifyPropertyChanged
     {
-        private readonly Logic _logic;
+        private readonly ILogic _logic;
         public ObservableCollection<PresentationBall> Balls { get; } = new ObservableCollection<PresentationBall>();
 
-        public BallManager(Logic logic)
+        public BallManager(ILogic logic)
         {
             _logic = logic;
             InitializeBalls();

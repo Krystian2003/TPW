@@ -16,7 +16,7 @@ public partial class App : Application
         base.OnStartup(e);
 
         IBallRepository repo = new BallRepository();
-        Logic logic = new Logic(repo); // change to the interface
+        ILogic logic = new Logic(repo); // change to the interface
         BallManager ballManager = new BallManager(logic);
         BilliardViewModel ballRenderer = new BilliardViewModel(ballManager);
 
