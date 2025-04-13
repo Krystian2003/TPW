@@ -13,7 +13,7 @@ namespace Data
         public Ball(float x, float y, float vx, float vy, float radius, string color)
         {
             Position = new Vector2(x, y);
-            Velocity = new Vector2(vx, vx);
+            Velocity = new Vector2(vx, vy);
             Radius = radius;
             Color = color;
         }

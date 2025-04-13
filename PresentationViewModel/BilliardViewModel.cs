@@ -12,9 +12,9 @@ namespace PresentationViewModel
 
         public ObservableCollection<PresentationBall> Balls => _ballManager.Balls;
 
-        public BilliardViewModel()
+        public BilliardViewModel(BallManager ballManager)
         {
-            _ballManager = new BallManager();
+            _ballManager = ballManager;
         }
 
         public void SetTableSize(float width, float height)

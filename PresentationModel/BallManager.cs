@@ -11,9 +11,9 @@ namespace PresentationModel
         private readonly Logic _logic;
         public ObservableCollection<PresentationBall> Balls { get; } = new ObservableCollection<PresentationBall>();
 
-        public BallManager()
+        public BallManager(Logic logic)
         {
-            _logic = new Logic();
+            _logic = logic;
             InitializeBalls();
         }
 

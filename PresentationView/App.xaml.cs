@@ -1,4 +1,8 @@
-﻿using System.Configuration;
+﻿using BusinessLogic;
+using Data;
+using PresentationModel;
+using PresentationViewModel;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 using System.Windows.Media.Animation;
@@ -11,10 +15,15 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
+        IBallRepository repo = new BallRepository();
+        Logic logic = new Logic(repo); // change to the interface
+        BallManager ballManager = new BallManager(logic);
+        BilliardViewModel ballRenderer = new BilliardViewModel(ballManager);
+
         var dialog = new StartupDialog();
         if (dialog.ShowDialog() == true)
         {
-            var mainWindow = new MainWindow(dialog.BallCount);
+            var mainWindow = new MainWindow(ballRenderer, dialog.BallCount);
             mainWindow.Closed += (s, args) => Shutdown();
             this.MainWindow = mainWindow;
             mainWindow.Show();

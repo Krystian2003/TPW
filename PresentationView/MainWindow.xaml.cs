@@ -14,16 +14,19 @@ namespace PresentationView
         private const double ReferenceHeight = 1080; // move both of these somewhere else
         private double uniformScale = 1;
 
-        private readonly BilliardViewModel _ballRenderer = new BilliardViewModel();
+        private readonly BilliardViewModel _ballRenderer;
         private readonly float _fixedDeltaTime = 1.0f / 60.0f;
         private double _accumulator = 0;
         private DateTime _lastFrameTime;
         private readonly List<Ellipse> _ballVisuals = new List<Ellipse>();
         private readonly int _ballCount;
 
-        public MainWindow(int ballCount)
+        public MainWindow(BilliardViewModel ballRenderer, int ballCount)
         {
             InitializeComponent();
+
+            _ballRenderer = ballRenderer;
+            _ballCount = ballCount;
 
             double screenWidth = SystemParameters.PrimaryScreenWidth;
             double screenHeight = SystemParameters.PrimaryScreenHeight;
@@ -38,7 +41,6 @@ namespace PresentationView
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            _ballCount = ballCount;
             _lastFrameTime = DateTime.Now;
             CompositionTarget.Rendering += OnRendering;
             //SizeChanged += MainWindow_SizeChanged;
