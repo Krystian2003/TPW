@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -9,6 +10,9 @@ namespace PresentationView
 {
     public partial class MainWindow : Window
     {
+        private const double ReferenceWidth = 1920;
+        private const double ReferenceHeight = 1080; // move both of these somewhere else
+        private double uniformScale = 1;
 
         private readonly BilliardViewModel _ballRenderer = new BilliardViewModel();
         private readonly float _fixedDeltaTime = 1.0f / 60.0f;
@@ -20,10 +24,24 @@ namespace PresentationView
         public MainWindow(int ballCount)
         {
             InitializeComponent();
+
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            
+            // Change to const
+            this.Width = screenWidth * 0.6;
+            this.Height = screenHeight * 0.6;
+
+            double scaleX = this.Width / ReferenceWidth;
+            double scaleY = this.Height / ReferenceHeight;
+            this.uniformScale = Math.Min(scaleX, scaleY); // possibly unnecessary
+
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
             _ballCount = ballCount;
             _lastFrameTime = DateTime.Now;
             CompositionTarget.Rendering += OnRendering;
-            SizeChanged += MainWindow_SizeChanged;
+            //SizeChanged += MainWindow_SizeChanged;
         }
         private void OnRendering(object? sender, EventArgs e)
         {
@@ -86,15 +104,18 @@ namespace PresentationView
             _ballRenderer.Balls.Clear();
             Random rand = new Random();
             string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
+            float canvasWidth = (float)canvas.ActualWidth;
+            float canvasHeight = (float)canvas.ActualHeight;
 
             for (int i = 0; i < count; i++)
             {
-                float x = rand.NextSingle() * (float)(canvas.ActualWidth - 20) + 10;
-                float y = rand.NextSingle() * (float)(canvas.ActualHeight - 20) + 10;
-                float vx = rand.NextSingle() * (200.0f - 50.0f) + 50.0f; // Change all magical numbers to constants
+                float radius = 25 * (float)uniformScale;
+                float x = rand.NextSingle() * (canvasWidth - radius  * 2) + radius;
+                float y = rand.NextSingle() * (canvasHeight - radius * 2) + radius;
+                float vx = (rand.NextSingle() * (400.0f - 100.0f) + 100.0f) * (float)uniformScale; // Change all magical numbers to constants
                 float vy = vx;
                 string color = colors[rand.Next(colors.Length)];
-                _ballRenderer.CreateBall(x, y, vx, vy, 10, color);
+                _ballRenderer.CreateBall(x, y, vx, vy, radius, color);
             }
         }
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -110,7 +131,13 @@ namespace PresentationView
             GenerateBalls(_ballCount);
             InitializeBallVisuals();
         }
+        //protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        //{
+        //    base.OnRenderSizeChanged(sizeInfo);
 
-
+        //    double width = sizeInfo.NewSize.Width;
+        //    double height = width / 2; // change the aspect ratio later
+        //    this.Height = Height;
+        //}
     }
 }
