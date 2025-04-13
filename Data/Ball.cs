@@ -10,10 +10,10 @@ namespace Data
         public float Radius { get; set; }
         public string Color { get; set; } 
 
-        public Ball(float x, float y, float radius, string color)
+        public Ball(float x, float y, float vx, float vy, float radius, string color)
         {
             Position = new Vector2(x, y);
-            Velocity = new Vector2(100.0f, 100.0f); //Vector2.Zero;
+            Velocity = new Vector2(vx, vx);
             Radius = radius;
             Color = color;
         }

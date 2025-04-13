@@ -13,7 +13,7 @@ namespace PresentationViewTest
             MainWindow mainWindow = null;
             var thread = new Thread(() =>
             {
-                mainWindow = new MainWindow();
+                mainWindow = new MainWindow(3);
             });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();

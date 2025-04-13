@@ -50,9 +50,9 @@ namespace PresentationModel
                 Balls[i].Y = ballsData[i].Position.Y;
             }
         }
-        public void AddBall(float x, float y, float radius, string color)
+        public void AddBall(float x, float y, float vx, float vy, float radius, string color)
         {
-            _logic.AddBall(x, y, radius, color);
+            _logic.AddBall(x, y, vx, vy, radius, color);
 
             Balls.Add(new PresentationBall(x, y, radius, color));
         }

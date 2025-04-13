@@ -27,9 +27,9 @@ namespace PresentationViewModel
             _ballManager.UpdatePositions(deltaTime);
         }
 
-        public void CreateBall(float x, float y, float radius, string color)
+        public void CreateBall(float x, float y, float vx, float vy, float radius, string color)
         {
-            _ballManager.AddBall(x, y, radius, color);
+            _ballManager.AddBall(x, y, vx, vy, radius, color);
         }
     }
 }

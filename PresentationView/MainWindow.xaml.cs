@@ -15,19 +15,14 @@ namespace PresentationView
         private double _accumulator = 0;
         private DateTime _lastFrameTime;
         private readonly List<Ellipse> _ballVisuals = new List<Ellipse>();
+        private readonly int _ballCount;
 
-        public MainWindow()
+        public MainWindow(int ballCount)
         {
             InitializeComponent();
-
-            // change name since it handles more than just balls
-            _ballRenderer.CreateBall(100, 100, 10, "Red");
-
-            InitializeBallVisuals();
-
+            _ballCount = ballCount;
             _lastFrameTime = DateTime.Now;
             CompositionTarget.Rendering += OnRendering;
-
             SizeChanged += MainWindow_SizeChanged;
         }
         private void OnRendering(object? sender, EventArgs e)
@@ -70,7 +65,8 @@ namespace PresentationView
                 _ballVisuals.Add(ellipse);
             }
         }
-
+        
+        // should this be here?
         private void UpdateBalls()
         {
             var balls = _ballRenderer.Balls.ToArray();
@@ -84,6 +80,23 @@ namespace PresentationView
                 Canvas.SetTop(visual, ball.Y - ball.Radius);
             }
         }
+        // should this be here?
+        private void GenerateBalls(int count)
+        {
+            _ballRenderer.Balls.Clear();
+            Random rand = new Random();
+            string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
+
+            for (int i = 0; i < count; i++)
+            {
+                float x = rand.NextSingle() * (float)(canvas.ActualWidth - 20) + 10;
+                float y = rand.NextSingle() * (float)(canvas.ActualHeight - 20) + 10;
+                float vx = rand.NextSingle() * (200.0f - 50.0f) + 50.0f; // Change all magical numbers to constants
+                float vy = vx;
+                string color = colors[rand.Next(colors.Length)];
+                _ballRenderer.CreateBall(x, y, vx, vy, 10, color);
+            }
+        }
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Update the table size when the window is resized
@@ -92,8 +105,12 @@ namespace PresentationView
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // possibly move the cast to logic instead
+            // Possibly move the cast to logic instead
             _ballRenderer.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
+            GenerateBalls(_ballCount);
+            InitializeBallVisuals();
         }
+
+
     }
 }

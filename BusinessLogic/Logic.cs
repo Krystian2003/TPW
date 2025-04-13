@@ -32,9 +32,9 @@ namespace BusinessLogic
             }
         }
 
-        public void AddBall(float x, float y, float radius, string color)
+        public void AddBall(float x, float y, float vx, float vy, float radius, string color)
         {
-            _balls.Add(new Ball(x, y, radius, color));
+            _balls.Add(new Ball(x, y, vx, vy, radius, color));
         }
 
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
