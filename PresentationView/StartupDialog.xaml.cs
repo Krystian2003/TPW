@@ -20,6 +20,12 @@ namespace PresentationView
         public StartupDialog()
         {
             InitializeComponent();
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            this.Width = screenWidth * 0.2;
+            this.Height = screenHeight * 0.2; // maybe it would be better to set a different resolution for the dialog and then scale it the same way the velocity and radius are scaledgidfsk
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
         }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
