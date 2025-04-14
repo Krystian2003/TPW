@@ -6,7 +6,6 @@ namespace Data
     {
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
-        // should radius be a float?
         public float Radius { get; set; }
         public string Color { get; set; } 
 

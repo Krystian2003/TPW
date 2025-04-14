@@ -1,10 +1,8 @@
-﻿using System.Configuration;
+﻿using PresentationViewModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Threading;
-using PresentationViewModel;
 
 namespace PresentationView
 {
@@ -114,7 +112,7 @@ namespace PresentationView
                 float radius = 25 * (float)uniformScale;
                 float x = rand.NextSingle() * (canvasWidth - radius  * 2) + radius;
                 float y = rand.NextSingle() * (canvasHeight - radius * 2) + radius;
-                float vx = (rand.NextSingle() * (400.0f - 100.0f) + 100.0f) * (float)uniformScale; // Change all magical numbers to constants
+                float vx = (rand.NextSingle() * (400.0f - -400.0f) + -400.0f) * (float)uniformScale; // Change all magical numbers to constants
                 float vy = vx;
                 string color = colors[rand.Next(colors.Length)];
                 _ballRenderer.CreateBall(x, y, vx, vy, radius, color);
