@@ -35,7 +35,6 @@ namespace PresentationModel
         }
         public double Radius { get; }
         public string Color { get; }
-        // Dodaj velocity
 
         public PresentationBall(double x, double y, double radius, string color)
         {

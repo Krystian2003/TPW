@@ -9,7 +9,7 @@ namespace PresentationModel
     public class BallManager : INotifyPropertyChanged
     {
         private readonly ILogic _logic;
-        public ObservableCollection<PresentationBall> Balls { get; } = new ObservableCollection<PresentationBall>();
+        public ObservableCollection<PresentationBall> Balls { get; } = new();
 
         public BallManager(ILogic logic)
         {

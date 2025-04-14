@@ -10,8 +10,10 @@ namespace PresentationView
     {
         private const double ReferenceWidth = 1920;
         private const double ReferenceHeight = 1080; // move both of these somewhere else
-        private double uniformScale = 1;
+        private const float MinVelocity = 100.0f;
+        private const float MaxVelocity = 400.0f;
 
+        private double scale = 1;
         private readonly BilliardViewModel _ballRenderer;
         private readonly float _fixedDeltaTime = 1.0f / 60.0f;
         private double _accumulator = 0;
@@ -35,7 +37,7 @@ namespace PresentationView
 
             double scaleX = this.Width / ReferenceWidth;
             double scaleY = this.Height / ReferenceHeight;
-            this.uniformScale = Math.Min(scaleX, scaleY); // possibly unnecessary
+            this.scale = Math.Min(scaleX, scaleY); // possibly unnecessary
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
@@ -98,26 +100,7 @@ namespace PresentationView
                 Canvas.SetTop(visual, ball.Y - ball.Radius);
             }
         }
-        // should this be here?
-        private void GenerateBalls(int count)
-        {
-            _ballRenderer.Balls.Clear();
-            Random rand = new Random();
-            string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
-            float canvasWidth = (float)canvas.ActualWidth;
-            float canvasHeight = (float)canvas.ActualHeight;
 
-            for (int i = 0; i < count; i++)
-            {
-                float radius = 25 * (float)uniformScale;
-                float x = rand.NextSingle() * (canvasWidth - radius  * 2) + radius;
-                float y = rand.NextSingle() * (canvasHeight - radius * 2) + radius;
-                float vx = (rand.NextSingle() * (400.0f - -400.0f) + -400.0f) * (float)uniformScale; // Change all magical numbers to constants
-                float vy = vx;
-                string color = colors[rand.Next(colors.Length)];
-                _ballRenderer.CreateBall(x, y, vx, vy, radius, color);
-            }
-        }
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Update the table size when the window is resized
@@ -128,7 +111,7 @@ namespace PresentationView
         {
             // Possibly move the cast to logic instead
             _ballRenderer.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
-            GenerateBalls(_ballCount);
+            _ballRenderer.GenerateBalls(_ballCount, (float)canvas.ActualWidth, (float)canvas.ActualHeight, (float)scale, MinVelocity, MaxVelocity);
             InitializeBallVisuals();
         }
         //protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
