@@ -5,7 +5,7 @@ namespace BusinessLogic
 {
     public class Logic : ILogic
     {
-        public Vector2 TableSize { get; set; } = new Vector2(800, 400);
+        public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
         private readonly IBallRepository _ballRepository;
 
@@ -20,26 +20,28 @@ namespace BusinessLogic
 
         public void SetTableSize(float width, float height)
         {
-            {
-                TableSize = new Vector2(width, height);
-            }
+            if (width <= 0 || height <= 0)
+                throw new ArgumentException("Table size must be positive.");
+
+            TableSize = new Vector2(width, height);
         }
 
         public void UpdateBallPositions(float deltaTime)
         {
             foreach (var ball in _ballRepository.GetBalls())
             {
-                ball.Position += ball.Velocity * deltaTime;
-
+                Vector2 newPosition = ball.Position + ball.Velocity * deltaTime;
+                _ballRepository.UpdateBallPosition(ball, newPosition);
                 BounceOffEdge(ball);
             }
         }
 
         public void AddBall(float x, float y, float vx, float vy, float radius, string color)
         {
-            _ballRepository.AddBall(new Ball(x, y, vx, vy, radius, color));
+            _ballRepository.AddBall(x, y, vx, vy, radius, color);
         }
 
+        // ?
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
         {
             return _ballRepository.GetBalls()
@@ -54,8 +56,16 @@ namespace BusinessLogic
             bool outOfBoundsX = ball.Position.X < minBounds.X || ball.Position.X > maxBounds.X;
             bool outOfBoundsY = ball.Position.Y < minBounds.Y || ball.Position.Y > maxBounds.Y;
 
-            if (outOfBoundsX) ball.Velocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
-            if (outOfBoundsY) ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
+            if (outOfBoundsX)
+            {
+                Vector2 newVelocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
+                _ballRepository.UpdateBallVelocity(ball, newVelocity);
+            }
+            if (outOfBoundsY)
+            {
+                Vector2 newVelocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
+                _ballRepository.UpdateBallVelocity(ball, newVelocity);
+            }
         }
     }
 }
