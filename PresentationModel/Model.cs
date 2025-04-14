@@ -6,12 +6,12 @@ using System.Numerics;
 
 namespace PresentationModel
 {
-    public class BallManager : INotifyPropertyChanged
+    public class Model : INotifyPropertyChanged
     {
         private readonly ILogic _logic;
         public ObservableCollection<PresentationBall> Balls { get; } = new();
 
-        public BallManager(ILogic logic)
+        public Model(ILogic logic)
         {
             _logic = logic;
             InitializeBalls();

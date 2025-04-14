@@ -14,14 +14,14 @@ namespace PresentationView
         private const float MaxVelocity = 400.0f;
 
         private double scale = 1;
-        private readonly BilliardViewModel _ballRenderer;
+        private readonly ViewModel _ballRenderer;
         private readonly float _fixedDeltaTime = 1.0f / 60.0f;
         private double _accumulator = 0;
         private DateTime _lastFrameTime;
         private readonly List<Ellipse> _ballVisuals = new List<Ellipse>();
         private readonly int _ballCount;
 
-        public MainWindow(BilliardViewModel ballRenderer, int ballCount)
+        public MainWindow(ViewModel ballRenderer, int ballCount)
         {
             InitializeComponent();
 

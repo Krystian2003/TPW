@@ -3,15 +3,14 @@ using System.Collections.ObjectModel;
 
 namespace PresentationViewModel
 {
-    // rename maybe
-    public class BilliardViewModel
+    public class ViewModel
     {
         private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" }; // Move this also?
-        private readonly BallManager _ballManager;
+        private readonly Model _ballManager;
 
         public ObservableCollection<PresentationBall> Balls => _ballManager.Balls;
 
-        public BilliardViewModel(BallManager ballManager)
+        public ViewModel(Model ballManager)
         {
             _ballManager = ballManager;
         }
