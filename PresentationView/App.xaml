@@ -2,7 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PresentationView"
+             xmlns:converters="clr-namespace:PresentationView.Converters"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
+        <converters:PositionConverter x:Key="PositionConverter"/>
+        <converters:BallPositionConverter x:Key="BallPositionConverter"/>
+        <converters:DiameterConverter x:Key="DiameterConverter"/>
+        <converters:ColorConverter x:Key="ColorConverter"/>
+        <local:ScaleConverter x:Key="ScaleConverter"/>
     </Application.Resources>
 </Application>

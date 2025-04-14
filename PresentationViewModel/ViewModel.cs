@@ -5,6 +5,13 @@ namespace PresentationViewModel
 {
     public class ViewModel
     {
+        private const double ReferenceWidth = 1920;
+        private const double ReferenceHeight = 1080;
+        private const float MinVelocity = 100.0f;
+        private const float MaxVelocity = 400.0f;
+
+        private double scale = 1;
+
         private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" }; // Move this also?
         private readonly Model _ballManager;
 
