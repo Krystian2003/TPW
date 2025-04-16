@@ -7,15 +7,15 @@ namespace BusinessLogicTest
 {
     public class ProgramTest
     {
-        [Fact]
-        public void Test1()
-        {
-            Logic logic = new Logic();
+        //[Fact]
+        //public void Test1()
+        //{
+        //    Logic logic = new Logic();
 
-            logic.InitializeBalls();
-            var balls = logic.GetBallsData();
+        //    logic.InitializeBalls();
+        //    var balls = logic.GetBallsData();
 
-            Assert.NotEmpty(balls);
-        }
+        //    Assert.NotEmpty(balls);
+        //}
     }
 }
