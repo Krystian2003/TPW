@@ -5,12 +5,7 @@ namespace PresentationViewModel
 {
     public class ViewModel
     {
-        //private const double ReferenceWidth = 1920;
-        //private const double ReferenceHeight = 1080;
-        //private const float MinVelocity = 100.0f;
-        //private const float MaxVelocity = 400.0f;
-
-        private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" }; // Move this
+        private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
         private readonly IModel _model;
         private readonly Random _rand = new Random();
 
@@ -34,7 +29,7 @@ namespace PresentationViewModel
         public void GenerateBalls(int count, float canvasWidth, float canvasHeight, float scale, float minVelocity, float maxVelocity)
         {
             if (count <= 0)
-                throw new ArgumentException(nameof(count), "Count must be greater than zero.");
+                throw new ArgumentException("Count must be greater than zero.", nameof(count));
 
             Balls.Clear();
 
@@ -43,11 +38,10 @@ namespace PresentationViewModel
                 float radius = 25 * scale;
                 float x = _rand.NextSingle() * (canvasWidth - radius * 2) + radius;
                 float y = _rand.NextSingle() * (canvasHeight - radius * 2) + radius;
-                // move applying scale to `Model`
                 float vx = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity) * scale;
                 float vy = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity) * scale;
-                vx = vx * ((_rand.Next(2) == 0) ? 1 : -1);
-                vy = vy * ((_rand.Next(2) == 0) ? 1 : -1);
+                vx *= _rand.Next(2) == 0 ? 1 : -1;
+                vy *= _rand.Next(2) == 0 ? 1 : -1;
                 string color = colors[_rand.Next(colors.Length)];
                 AddBall(x, y, vx, vy, radius, color);
             }

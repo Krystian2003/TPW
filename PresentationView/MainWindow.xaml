@@ -3,18 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PresentationView"
         mc:Ignorable="d"
-        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={StaticResource ScaleConverter}, ConverterParameter=0.6}"
-        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={StaticResource ScaleConverter}, ConverterParameter=0.3375}"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow"
         Loaded="Window_Loaded">
-    <Window.Resources>
-        <local:ScaleConverter x:Key="ScaleConverter"/>
-    </Window.Resources>
-        <Grid>
+    <Grid>
         <Canvas x:Name="canvas" Background="DarkGreen">
             <ItemsControl ItemsSource="{Binding Balls}" x:Name="ballsItemsControl">
                 <ItemsControl.ItemsPanel>
@@ -24,31 +18,17 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left">
-                            <Setter.Value>
-                                <MultiBinding Converter="{StaticResource BallPositionConverter}">
-                                    <Binding Path="X" />
-                                    <Binding Path="Radius" />
-                                </MultiBinding>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Canvas.Top">
-                            <Setter.Value>
-                                <MultiBinding Converter="{StaticResource BallPositionConverter}">
-                                    <Binding Path="Y" />
-                                    <Binding Path="Radius" />
-                                </MultiBinding>
-                            </Setter.Value>
-                        </Setter>
+                        <Setter Property="Canvas.Left" Value="{Binding CanvasLeft}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding CanvasTop}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Ellipse Width="{Binding Radius, Converter={StaticResource DiameterConverter}}" 
-                             Height="{Binding Radius, Converter={StaticResource DiameterConverter}}"
-                             Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
-                             Stroke="Black"
-                             StrokeThickness="1" />
+                        <Ellipse Width="{Binding Diameter}" 
+                                 Height="{Binding Diameter}"
+                                 Fill="{Binding Color}"
+                            Stroke="Black"
+                                 StrokeThickness="1" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

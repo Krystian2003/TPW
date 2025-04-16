@@ -8,6 +8,10 @@ namespace PresentationModel
         private double _x;
         private double _y;
 
+        public double CanvasLeft => X - Radius;
+        public double CanvasTop => Y - Radius;
+        public double Diameter => Radius * 2;
+
         public double X
         {
             get => _x;
@@ -17,11 +21,12 @@ namespace PresentationModel
                 {
                     _x = value;
                     OnPropertyChanged(nameof(X));
+                    OnPropertyChanged(nameof(CanvasLeft));
                 }
             }
         }
 
-        public double Y 
+        public double Y
         {
             get => _y;
             set
@@ -30,16 +35,18 @@ namespace PresentationModel
                 {
                     _y = value;
                     OnPropertyChanged(nameof(Y));
+                    OnPropertyChanged(nameof(CanvasTop));
                 }
             }
         }
+
         public double Radius { get; }
         public string Color { get; }
 
         public PresentationBall(double x, double y, double radius, string color)
         {
-            X = x;
-            Y = y;
+            _x = x;
+            _y = y;
             Radius = radius;
             Color = color;
         }
