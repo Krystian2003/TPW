@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace PresentationModel
 {
-    public class Model
+    public class Model : IModel
     {
         private readonly ILogic _logic;
         public ObservableCollection<PresentationBall> Balls { get; } = new();

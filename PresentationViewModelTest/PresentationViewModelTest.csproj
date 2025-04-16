@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PresentationModel\PresentationModel.csproj" />
+    <ProjectReference Include="..\PresentationViewModel\PresentationViewModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
