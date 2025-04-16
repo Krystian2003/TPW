@@ -16,6 +16,11 @@ namespace Data
             _balls.Add(new Ball(x, y, vx, vy, radius, color));
         }
 
+        public void AddBall(Ball ball)
+        {
+            _balls.Add(ball);
+        }
+
         public void Clear()
         {
             _balls.Clear();
