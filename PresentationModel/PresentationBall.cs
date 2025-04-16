@@ -16,7 +16,7 @@ namespace PresentationModel
                 if (_x != value)
                 {
                     _x = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(X));
                 }
             }
         }
@@ -29,7 +29,7 @@ namespace PresentationModel
                 if (_y != value)
                 {
                     _y = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(Y));
                 }
             }
         }

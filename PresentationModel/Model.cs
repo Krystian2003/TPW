@@ -14,6 +14,7 @@ namespace PresentationModel
         public Model(ILogic logic)
         {
             _logic = logic;
+            _logic.PositionsUpdated += OnPositionsUpdated;
             InitializeBalls();
         }
 
@@ -31,6 +32,17 @@ namespace PresentationModel
                     ball.Color
                     ));
             }
+            _logic.Start();
+        }
+
+        private void OnPositionsUpdated(object? sender, EventArgs e)
+        {
+                var ballsData = _logic.GetBallsData().ToList();
+                for (int i = 0; i < ballsData.Count; i++)
+                {
+                    Balls[i].X = ballsData[i].Position.X;
+                    Balls[i].Y = ballsData[i].Position.Y;
+                }
         }
 
         public void SetTableSize(float width, float height)
@@ -40,7 +52,6 @@ namespace PresentationModel
 
         public void UpdatePositions(float deltaTime)
         {
-            _logic.UpdateBallPositions(deltaTime);
             var ballsData = _logic.GetBallsData().ToList();
 
             // Possibly change to foreach
