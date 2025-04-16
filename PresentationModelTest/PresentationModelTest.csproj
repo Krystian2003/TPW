@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\Logic.csproj" />
+    <ProjectReference Include="..\PresentationModel\PresentationModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
