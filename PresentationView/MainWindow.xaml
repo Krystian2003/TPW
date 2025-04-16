@@ -6,10 +6,29 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow"
+        Title="Balls"
         Loaded="Window_Loaded">
     <Grid>
-        <Canvas x:Name="canvas" Background="DarkGreen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Number of balls to spawn:" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Text="{Binding BallCount, UpdateSourceTrigger=PropertyChanged}" 
+                     Margin="5,0" VerticalAlignment="Center"/>
+            <Button Grid.Column="2" Content="Generate Balls" Width="100" Margin="5,0" 
+                    Command="{Binding GenerateBallsCommand}"/>
+        </Grid>
+
+        <Canvas x:Name="canvas" Grid.Row="1" Background="DarkGreen">
             <ItemsControl ItemsSource="{Binding Balls}" x:Name="ballsItemsControl">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -27,7 +46,7 @@
                         <Ellipse Width="{Binding Diameter}" 
                                  Height="{Binding Diameter}"
                                  Fill="{Binding Color}"
-                            Stroke="Black"
+                                 Stroke="Black"
                                  StrokeThickness="1" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

@@ -4,31 +4,23 @@ using PresentationModel;
 using PresentationViewModel;
 using System.Windows;
 
-namespace PresentationView;
-
-public partial class App : Application
+namespace PresentationView
 {
-    protected override void OnStartup(StartupEventArgs e)
+    public partial class App : Application
     {
-        base.OnStartup(e);
-
-        IBallRepository repo = new BallRepository();
-        ILogic logic = new Logic(repo); // change to the interface
-        Model ballManager = new Model(logic);
-        ViewModel ballRenderer = new ViewModel(ballManager);
-
-        var dialog = new StartupDialog();
-        if (dialog.ShowDialog() == true)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            var mainWindow = new MainWindow(ballRenderer, dialog.BallCount);
+            base.OnStartup(e);
+
+            IBallRepository repo = new BallRepository();
+            ILogic logic = new Logic(repo);
+            Model ballManager = new Model(logic);
+            ViewModel ballRenderer = new ViewModel(ballManager);
+
+            var mainWindow = new MainWindow(ballRenderer);
             mainWindow.Closed += (s, args) => Shutdown();
             this.MainWindow = mainWindow;
             mainWindow.Show();
         }
-        else
-        {
-            Shutdown();
-        }
     }
 }
-

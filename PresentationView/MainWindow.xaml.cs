@@ -1,36 +1,32 @@
 ﻿using PresentationViewModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace PresentationView
 {
     public partial class MainWindow : Window
     {
-        private readonly ViewModel _ballRenderer;
-        private readonly int _ballCount;
+        private readonly ViewModel _viewModel;
 
-        public MainWindow(ViewModel ballRenderer, int ballCount)
+        public MainWindow(ViewModel viewModel)
         {
             InitializeComponent();
-
-            _ballRenderer = ballRenderer;
-            _ballCount = ballCount;
-        }
-
-        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (canvas.IsLoaded)
-            {
-                _ballRenderer.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
-            }
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _ballRenderer.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
-            _ballRenderer.GenerateBalls(_ballCount, (float)canvas.ActualWidth, (float)canvas.ActualHeight, 0.6f, 100.0f, 400.0f);
-            this.DataContext = _ballRenderer;
+            _viewModel.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
+
+            //SizeChanged += MainWindow_SizeChanged;
         }
+
+        //private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        //{
+        //    if (canvas.IsLoaded)
+        //    {
+        //        _viewModel.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
+        //    }
+        //}
     }
 }

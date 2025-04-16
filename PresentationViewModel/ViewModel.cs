@@ -1,5 +1,7 @@
 ﻿using PresentationModel;
+using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PresentationViewModel
 {
@@ -8,16 +10,36 @@ namespace PresentationViewModel
         private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
         private readonly IModel _model;
         private readonly Random _rand = new Random();
+        private bool _canGenerateBalls = true;
+        private float _canvasWidth;
+        private float _canvasHeight;
 
         public ObservableCollection<PresentationBall> Balls => _model.Balls;
+        public ICommand GenerateBallsCommand { get; private set; }
+        public int BallCount { get; set; } = 10;
 
         public ViewModel(IModel model)
         {
             _model = model;
+            GenerateBallsCommand = new RelayCommand(ExecuteGenerateBalls, CanGenerateBalls);
+        }
+
+        private bool CanGenerateBalls(object parameter)
+        {
+            return _canGenerateBalls && BallCount > 0;
+        }
+
+        private void ExecuteGenerateBalls(object parameter)
+        {
+            GenerateBalls(BallCount, _canvasWidth, _canvasHeight, 0.6f, 100.0f, 400.0f);
+            _canGenerateBalls = false;
+            (GenerateBallsCommand as RelayCommand)?.RaiseCanExecuteChanged();
         }
 
         public void SetTableSize(float width, float height)
         {
+            _canvasWidth = width;
+            _canvasHeight = height;
             _model.SetTableSize(width, height);
         }
 
@@ -29,7 +51,7 @@ namespace PresentationViewModel
         public void GenerateBalls(int count, float canvasWidth, float canvasHeight, float scale, float minVelocity, float maxVelocity)
         {
             if (count <= 0)
-                throw new ArgumentException("Count must be greater than zero.", nameof(count));
+                throw new ArgumentException("Must be greater than 0", nameof(count));
 
             Balls.Clear();
 
