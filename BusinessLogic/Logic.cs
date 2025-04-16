@@ -34,16 +34,16 @@ namespace BusinessLogic
             _updateTimer.Stop();
         }
 
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        internal void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             UpdateBallPositions(DeltaTime);
             PositionsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        public void InitializeBalls()
-        {
-            _ballRepository.Clear();
-        }
+        //public void InitializeBalls()
+        //{
+        //    _ballRepository.Clear();
+        //}
 
         public void SetTableSize(float width, float height)
         {

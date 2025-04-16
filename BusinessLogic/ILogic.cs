@@ -9,7 +9,8 @@ namespace BusinessLogic
         Vector2 TableSize { get; }
 
         void SetTableSize(float width, float height);
-        void InitializeBalls();
+        // Not sure if needed
+        //void InitializeBalls();
         void Start();
         void Stop();
         void AddBall(float x, float y, float vx, float vy, float radius, string color);
