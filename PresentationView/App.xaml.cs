@@ -14,10 +14,10 @@ namespace PresentationView
 
             IBallRepository repo = new BallRepository();
             ILogic logic = new Logic(repo);
-            Model ballManager = new Model(logic);
-            ViewModel ballRenderer = new ViewModel(ballManager);
+            Model model = new Model(logic);
+            ViewModel viewModel = new ViewModel(model);
 
-            var mainWindow = new MainWindow(ballRenderer);
+            var mainWindow = new MainWindow(viewModel);
             mainWindow.Closed += (s, args) => Shutdown();
             this.MainWindow = mainWindow;
             mainWindow.Show();
