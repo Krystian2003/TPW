@@ -19,6 +19,28 @@ namespace PresentationViewModelTest
             AddBallCallCount++;
             Balls.Add(new PresentationBall(x, y, radius, color));
         }
+
+        public void AddBall(float vx, float vy, string color)
+        {
+            // ??dfiastg
+            Balls.Add(new PresentationBall(5.0, 5.0, 5.0, color));
+        }
+
+        public float GetCanvasHeight()
+        {
+            return TableSize.Y;
+        }
+
+        public float GetCanvasWidth()
+        {
+            return TableSize.X;
+        }
+
+        public void InitializeScreenDimensions(float screenWidth, float screenHeight)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetTableSize(float width, float height)
         {
             TableSize = new Vector2(width, height);

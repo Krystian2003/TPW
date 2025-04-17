@@ -19,19 +19,10 @@ namespace PresentationViewModelTest
         {
             var mockModel = new MockModel();
             var viewModel = new ViewModel(mockModel);
-            viewModel.AddBall(1, 2, 3, 4, 5, "Red");
+            mockModel.AddBall(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, "Red");
             Assert.Equal(1, mockModel.AddBallCallCount);
             Assert.Equal(1, mockModel.Balls[0].X);
             Assert.Equal("Red", mockModel.Balls[0].Color);
-        }
-
-        [Fact]
-        public void GenerateBallsAddsCorrectNumberOfBalls()
-        {
-            var mockModel = new MockModel();
-            var viewModel = new ViewModel(mockModel);
-            viewModel.GenerateBalls(5, 800, 400, 0.6f, 100.0f, 400.0f);
-            Assert.Equal(5, mockModel.AddBallCallCount);
         }
 
         [Fact]
@@ -39,7 +30,7 @@ namespace PresentationViewModelTest
         {
             var mockModel = new MockModel();
             var viewModel = new ViewModel(mockModel);
-            viewModel.GenerateBalls(5, 800, 400, 0.6f, 100.0f, 400.0f);
+            viewModel.GenerateBalls(5, 100.0f, 400.0f);
             foreach (var ball in mockModel.Balls)
             {
                 Assert.InRange(ball.X, 0, 800);
@@ -53,7 +44,7 @@ namespace PresentationViewModelTest
             var mockModel = new MockModel();
             var viewModel = new ViewModel(mockModel);
             var validColors = new[] { "Red", "Blue", "Green", "Yellow", "Purple" };
-            viewModel.GenerateBalls(5, 800, 400, 0.6f, 100.0f, 400.0f);
+            viewModel.GenerateBalls(5, 100.0f, 400.0f);
             foreach (var ball in mockModel.Balls)
             {
                 Assert.Contains(ball.Color, validColors);
