@@ -15,9 +15,9 @@ namespace BusinessLogic
         private const float UpdateInterval = 16.67f;
         private const float DeltaTime = 0.01667f;
 
-    public Logic(IBallRepository ballRepository)
+    public Logic()
         {
-            _ballRepository = ballRepository;
+            _ballRepository = new BallRepository();
 
             _updateTimer = new Timer(UpdateInterval);
             _updateTimer.Elapsed += OnTimerElapsed;

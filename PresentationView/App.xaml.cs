@@ -12,8 +12,7 @@ namespace PresentationView
         {
             base.OnStartup(e);
 
-            IBallRepository repo = new BallRepository();
-            ILogic logic = new Logic(repo);
+            ILogic logic = new Logic();
             Model model = new Model(logic);
             ViewModel viewModel = new ViewModel(model);
 
