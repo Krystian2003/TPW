@@ -13,7 +13,7 @@ namespace PresentationView
             base.OnStartup(e);
 
             ILogic logic = new Logic();
-            Model model = new Model(logic);
+            IModel model = new Model(logic);
             ViewModel viewModel = new ViewModel(model);
 
             var mainWindow = new MainWindow(viewModel);
