@@ -72,30 +72,59 @@ namespace BusinessLogic
 
         public void UpdateBallPositions(float deltaTime)
         {
-            var ballsCopy = _ballRepository.GetBalls().ToList();
-            
-            foreach (var ball in ballsCopy)
+            var balls = _ballRepository.GetBalls().ToList();
+
+            foreach (var ball in balls)
             {
-                Vector2 newPosition = ball.Position + ball.Velocity * deltaTime;
-                _ballRepository.UpdateBallPosition(ball, newPosition);
-                BounceOffEdge(ball);
+                Vector2 newPos = ball.Position + ball.Velocity * deltaTime;
+                Vector2 newVel = ball.Velocity;
+
+                float minX = ball.Radius;
+                float maxX = TableSize.X - ball.Radius;
+                float minY = ball.Radius;
+                float maxY = TableSize.Y - ball.Radius;
+
+                if (newPos.X < minX || newPos.X > maxX)
+                {
+                    newVel.X = -newVel.X;
+                    newPos.X = Math.Clamp(newPos.X, minX, maxX);
+                }
+
+                if (newPos.Y < minY || newPos.Y > maxY)
+                {
+                    newVel.Y = -newVel.Y;
+                    newPos.Y = Math.Clamp(newPos.Y, minY, maxY);
+                }
+
+                _ballRepository.UpdateBallVelocity(ball, newVel);
+                _ballRepository.UpdateBallPosition(ball, newPos);
             }
 
-            for (int i = 0; i < ballsCopy.Count; i++)
-                for (int j = i + 1; j < ballsCopy.Count; j++)
+            for (int i = 0; i < balls.Count; i++)
+                for (int j = i + 1; j < balls.Count; j++)
                 {
-                    var ball1 = ballsCopy[i];
-                    var ball2 = ballsCopy[j];
+                    var b1 = balls[i];
+                    var b2 = balls[j];
+                    Vector2 delta = b1.Position - b2.Position;
+                    float distSq = delta.LengthSquared();
+                    float radii = b1.Radius + b2.Radius;
 
-                    float distanceSquared = Vector2.DistanceSquared(ball1.Position, ball2.Position);
-                    float radiusSum = ball1.Radius + ball2.Radius;
-                    float radiusSumSquared = radiusSum * radiusSum;
-
-                    if (distanceSquared <= radiusSumSquared)
+                    if (distSq <= radii * radii)
                     {
-                        BallCollision(ball1, ball2);
+                    BallCollision(b1, b2);
+
+                    float dist = MathF.Sqrt(distSq);
+                    if (dist > 0f)
+                    {
+                        float overlap = radii - dist;
+                        Vector2 n = delta / dist;  
+                        Vector2 p1 = b1.Position +  n * (overlap / 2f);
+                        Vector2 p2 = b2.Position -  n * (overlap / 2f);
+                        _ballRepository.UpdateBallPosition(b1, p1);
+                        _ballRepository.UpdateBallPosition(b2, p2);
                     }
-                }
+                }   
+            }
         }
 
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
@@ -125,28 +154,6 @@ namespace BusinessLogic
 
             _ballRepository.UpdateBallVelocity(ball1, ball1.Velocity - impulse * mass2);
             _ballRepository.UpdateBallVelocity(ball2, ball2.Velocity + impulse * mass1);
-        }
-
-        private void BounceOffEdge(Ball ball)
-        {
-            Vector2 minBounds = new Vector2(ball.Radius, ball.Radius);
-            Vector2 maxBounds = new Vector2(TableSize.X - ball.Radius, TableSize.Y - ball.Radius);
-
-            bool outOfBoundsX = ball.Position.X < minBounds.X || ball.Position.X > maxBounds.X;
-            bool outOfBoundsY = ball.Position.Y < minBounds.Y || ball.Position.Y > maxBounds.Y;
-
-            if (outOfBoundsX)
-            {
-                Vector2 newVelocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
-                _ballRepository.UpdateBallVelocity(ball, newVelocity);
-                _ballRepository.UpdateBallPosition(ball, new Vector2(Math.Clamp(ball.Position.X, minBounds.X, maxBounds.X), ball.Position.Y));
-            }
-            if (outOfBoundsY)
-            {
-                Vector2 newVelocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
-                _ballRepository.UpdateBallVelocity(ball, newVelocity);
-                _ballRepository.UpdateBallPosition(ball, new Vector2(ball.Position.X, Math.Clamp(ball.Position.Y, minBounds.Y, maxBounds.Y)));
-            }
         }
     }
 }
