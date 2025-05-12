@@ -139,11 +139,13 @@ namespace BusinessLogic
             {
                 Vector2 newVelocity = new Vector2(-ball.Velocity.X, ball.Velocity.Y);
                 _ballRepository.UpdateBallVelocity(ball, newVelocity);
+                _ballRepository.UpdateBallPosition(ball, new Vector2(Math.Clamp(ball.Position.X, minBounds.X, maxBounds.X), ball.Position.Y));
             }
             if (outOfBoundsY)
             {
                 Vector2 newVelocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
                 _ballRepository.UpdateBallVelocity(ball, newVelocity);
+                _ballRepository.UpdateBallPosition(ball, new Vector2(ball.Position.X, Math.Clamp(ball.Position.Y, minBounds.Y, maxBounds.Y)));
             }
         }
     }

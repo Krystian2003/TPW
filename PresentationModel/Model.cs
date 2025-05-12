@@ -94,8 +94,15 @@ namespace PresentationModel
             float radius = _rand.NextSingle() * (MaxBallRadius - MinBallRadius) + MinBallRadius;
             float scaledRadius = radius * _scale;
 
-            float x = _rand.NextSingle() * (_canvasWidth - radius * 2) + radius;
-            float y = _rand.NextSingle() * (_canvasHeight - radius * 2) + radius;
+            float x, y;
+            bool overlaps;
+            do
+            {
+                x = _rand.NextSingle() * (_canvasWidth - 2 * scaledRadius) + scaledRadius;
+                y = _rand.NextSingle() * (_canvasHeight - 2 * scaledRadius) + scaledRadius;
+                overlaps = Balls.Any(b =>
+                    Math.Sqrt((b.X - x) * (b.X - x) + (b.Y - y) * (b.Y - y)) < (b.Radius + scaledRadius));
+            } while (overlaps);
 
             float scaledVx = vx * _scale;
             float scaledVy = vy * _scale;
