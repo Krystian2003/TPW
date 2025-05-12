@@ -7,6 +7,7 @@ namespace PresentationViewModel
 {
     public class ViewModel
     {
+        private const int MaxBallsAllowed = 100;
         private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
         private readonly IModel _model;
         private readonly Random _rand = new Random();
@@ -53,6 +54,9 @@ namespace PresentationViewModel
         {
             if (count <= 0)
                 throw new ArgumentException("Must be greater than 0", nameof(count));
+
+            if (count > MaxBallsAllowed)
+                throw new ArgumentException($"Cannot generate more than {MaxBallsAllowed} balls", nameof(count));
 
             Balls.Clear();
 

@@ -55,7 +55,9 @@ namespace BusinessLogic
 
         public void UpdateBallPositions(float deltaTime)
         {
-            foreach (var ball in _ballRepository.GetBalls())
+            var ballsCopy = _ballRepository.GetBalls().ToList();
+            
+            foreach (var ball in ballsCopy)
             {
                 Vector2 newPosition = ball.Position + ball.Velocity * deltaTime;
                 _ballRepository.UpdateBallPosition(ball, newPosition);
