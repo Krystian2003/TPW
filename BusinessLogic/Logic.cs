@@ -40,11 +40,6 @@ namespace BusinessLogic
             PositionsUpdated?.Invoke(this, EventArgs.Empty);
         }
 
-        //public void InitializeBalls()
-        //{
-        //    _ballRepository.Clear();
-        //}
-
         public void SetTableSize(float width, float height)
         {
             if (width <= 0 || height <= 0)
@@ -63,6 +58,22 @@ namespace BusinessLogic
                 _ballRepository.UpdateBallPosition(ball, newPosition);
                 BounceOffEdge(ball);
             }
+
+            for (int i = 0; i < ballsCopy.Count; i++)
+                for (int j = i + 1; j < ballsCopy.Count; j++)
+                {
+                    var ball1 = ballsCopy[i];
+                    var ball2 = ballsCopy[j];
+
+                    float distanceSquared = Vector2.DistanceSquared(ball1.Position, ball2.Position);
+                    float radiusSum = ball1.Radius + ball2.Radius;
+                    float radiusSumSquared = radiusSum * radiusSum;
+
+                    if (distanceSquared <= radiusSumSquared)
+                    {
+                        BallCollision(ball1, ball2);
+                    }
+                }
         }
 
         public void AddBall(float x, float y, float vx, float vy, float radius, string color)
@@ -74,6 +85,29 @@ namespace BusinessLogic
         {
             return _ballRepository.GetBalls()
                 .Select(b => (b.Position, b.Velocity, b.Radius, b.Color));
+        }
+
+        private void BallCollision(Ball ball1, Ball ball2)
+        {
+            float mass1 = ball1.Radius * ball1.Radius;
+            float mass2 = ball2.Radius * ball2.Radius;
+
+            Vector2 posDiff = ball1.Position - ball2.Position;
+            float distanceSquared = posDiff.LengthSquared();
+
+            if (distanceSquared == 0f)
+                return;
+
+            Vector2 velDiff1 = ball1.Velocity - ball2.Velocity;
+            float dotProduct = Vector2.Dot(posDiff, velDiff1);
+
+            if(dotProduct >= 0)
+                return;
+
+            Vector2 impulse = (2 * dotProduct / (mass1 + mass2)) * posDiff / distanceSquared;
+
+            _ballRepository.UpdateBallVelocity(ball1, ball1.Velocity - impulse * mass2);
+            _ballRepository.UpdateBallVelocity(ball2, ball2.Velocity + impulse * mass1);
         }
 
         private void BounceOffEdge(Ball ball)

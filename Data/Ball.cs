@@ -17,5 +17,10 @@ namespace Data
             Radius = radius;
             Color = color;
         }
+
+        public void UpdateVelocity(Vector2 newVelocity)
+        {
+            Velocity = newVelocity;
+        }
     }
 }

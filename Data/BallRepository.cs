@@ -40,7 +40,7 @@ namespace Data
             var index = _balls.IndexOf(ball);
             if (index != -1)
             {
-                _balls[index].Velocity = newVelocity;
+                _balls[index].UpdateVelocity(newVelocity);
             }
         }
     }
