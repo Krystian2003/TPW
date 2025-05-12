@@ -106,20 +106,20 @@ namespace BusinessLogic
                     var b1 = balls[i];
                     var b2 = balls[j];
                     Vector2 delta = b1.Position - b2.Position;
-                    float distSq = delta.LengthSquared();
+                    float dist = delta.Length();
+                    float distSq = dist * dist;
                     float radii = b1.Radius + b2.Radius;
 
                     if (distSq <= radii * radii)
                     {
                     BallCollision(b1, b2);
 
-                    float dist = MathF.Sqrt(distSq);
                     if (dist > 0f)
                     {
                         float overlap = radii - dist;
                         Vector2 n = delta / dist;  
-                        Vector2 p1 = b1.Position +  n * (overlap / 2f);
-                        Vector2 p2 = b2.Position -  n * (overlap / 2f);
+                        Vector2 p1 = b1.Position +  n * (overlap / 2.0f);
+                        Vector2 p2 = b2.Position -  n * (overlap / 2.0f);
                         _ballRepository.UpdateBallPosition(b1, p1);
                         _ballRepository.UpdateBallPosition(b2, p2);
                     }
