@@ -7,7 +7,7 @@ namespace BusinessLogic
 {
     public class Logic : ILogic
     {
-        public event EventHandler PositionsUpdated;
+        public event EventHandler? PositionsUpdated;
         public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
         private readonly IBallRepository _ballRepository;
@@ -34,7 +34,7 @@ namespace BusinessLogic
             _updateTimer.Stop();
         }
 
-        internal void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        internal void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
             UpdateBallPositions(DeltaTime);
             PositionsUpdated?.Invoke(this, EventArgs.Empty);

@@ -26,12 +26,12 @@ namespace PresentationViewModel
             GenerateBallsCommand = new RelayCommand(ExecuteGenerateBalls, CanGenerateBalls);
         }
 
-        private bool CanGenerateBalls(object parameter)
+        private bool CanGenerateBalls(object? parameter)
         {
             return _canGenerateBalls && BallCount > 0;
         }
 
-        private void ExecuteGenerateBalls(object parameter)
+        private void ExecuteGenerateBalls(object? parameter)
         {
             GenerateBalls(BallCount, 60.0f, 400.0f);
             _canGenerateBalls = false;
