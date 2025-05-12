@@ -9,10 +9,15 @@ namespace PresentationModel
 {
     public class Model : IModel
     {
+        private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
         private const double ReferenceWidth = 1920.0;
         private const double ReferenceHeight = 1080.0;
         private const double CanvasHeightRatio = 0.6;
         private const double AspectRatio = 16.0 / 9.0;
+        private const float MaxBallRadius = 50.0f;
+        private const float MinBallRadius = 10.0f;
+        private const float maxVelocity = 600.0f;
+        private const float minVelocity = 200.0f;
 
         private readonly ILogic _logic;
         private readonly Random _rand = new Random();
@@ -77,9 +82,16 @@ namespace PresentationModel
             _scale = _canvasHeight / (float)ReferenceHeight;
         }
 
-        public void AddBall(float vx, float vy, string color)
+        public void AddBall()
         {
-            float radius = 25 * _scale;
+            float vx = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
+            float vy = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
+            vx *= _rand.Next(2) == 0 ? 1 : -1;
+            vy *= _rand.Next(2) == 0 ? 1 : -1;
+            string color = colors[_rand.Next(colors.Length)];
+
+            float radius = _rand.NextSingle() * (MaxBallRadius - MinBallRadius) + MinBallRadius;
+            float scaledRadius = radius * _scale;
 
             float x = _rand.NextSingle() * (_canvasWidth - radius * 2) + radius;
             float y = _rand.NextSingle() * (_canvasHeight - radius * 2) + radius;
@@ -87,8 +99,8 @@ namespace PresentationModel
             float scaledVx = vx * _scale;
             float scaledVy = vy * _scale;
 
-            _logic.AddBall(x, y, scaledVx, scaledVy, radius, color);
-            Balls.Add(new PresentationBall(x, y, radius, color));
+            _logic.AddBall(x, y, scaledVx, scaledVy, scaledRadius, color);
+            Balls.Add(new PresentationBall(x, y, scaledRadius, color));
         }
 
         public void AddBall(float x, float y, float vx, float vy, float radius, string color)

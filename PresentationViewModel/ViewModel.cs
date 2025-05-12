@@ -8,7 +8,6 @@ namespace PresentationViewModel
     public class ViewModel
     {
         private const int MaxBallsAllowed = 100;
-        private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
         private readonly IModel _model;
         private readonly Random _rand = new Random();
         private bool _canGenerateBalls = true;
@@ -33,7 +32,7 @@ namespace PresentationViewModel
 
         private void ExecuteGenerateBalls(object? parameter)
         {
-            GenerateBalls(BallCount, 60.0f, 400.0f);
+            GenerateBalls(BallCount);
             _canGenerateBalls = false;
             (GenerateBallsCommand as RelayCommand)?.RaiseCanExecuteChanged();
         }
@@ -50,7 +49,7 @@ namespace PresentationViewModel
             _model.SetTableSize(width, height);
         }
 
-        public void GenerateBalls(int count, float minVelocity, float maxVelocity)
+        public void GenerateBalls(int count)
         {
             if (count <= 0)
                 throw new ArgumentException("Must be greater than 0", nameof(count));
@@ -62,13 +61,7 @@ namespace PresentationViewModel
 
             for (int i = 0; i < count; i++)
             {
-                float vx = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
-                float vy = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
-                vx *= _rand.Next(2) == 0 ? 1 : -1;
-                vy *= _rand.Next(2) == 0 ? 1 : -1;
-                string color = colors[_rand.Next(colors.Length)];
-
-                _model.AddBall(vx, vy, color);
+                _model.AddBall();
             }
         }
 
