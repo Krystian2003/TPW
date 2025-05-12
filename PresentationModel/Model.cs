@@ -32,7 +32,7 @@ namespace PresentationModel
             _logic = logic;
             _logic.PositionsUpdated += OnPositionsUpdated;
             InitializeBalls();
-            _logic.Start();
+            _logic.StartAsync();
         }
 
         private void InitializeBalls()
@@ -53,7 +53,8 @@ namespace PresentationModel
         private void OnPositionsUpdated(object? sender, EventArgs e)
         {
             var ballsData = _logic.GetBallsData().ToList();
-            for (int i = 0; i < ballsData.Count; i++)
+            int count = Math.Min(Balls.Count, ballsData.Count);
+            for (int i = 0; i < count; i++)
             {
                 Balls[i].X = ballsData[i].Position.X;
                 Balls[i].Y = ballsData[i].Position.Y;
@@ -82,7 +83,7 @@ namespace PresentationModel
             _scale = _canvasHeight / (float)ReferenceHeight;
         }
 
-        public void AddBall()
+        public async void AddBallAsync()
         {
             float vx = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
             float vy = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
@@ -99,13 +100,13 @@ namespace PresentationModel
             float scaledVx = vx * _scale;
             float scaledVy = vy * _scale;
 
-            _logic.AddBall(x, y, scaledVx, scaledVy, scaledRadius, color);
+            await _logic.AddBallAsync(x, y, scaledVx, scaledVy, scaledRadius, color);
             Balls.Add(new PresentationBall(x, y, scaledRadius, color));
         }
 
-        public void AddBall(float x, float y, float vx, float vy, float radius, string color)
+        public async void AddBallAsync(float x, float y, float vx, float vy, float radius, string color)
         {
-            _logic.AddBall(x, y, vx, vy, radius, color);
+            await _logic.AddBallAsync(x, y, vx, vy, radius, color);
             Balls.Add(new PresentationBall(x, y, radius, color));
         }
 

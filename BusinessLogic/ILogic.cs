@@ -4,14 +4,14 @@ namespace BusinessLogic
 {
     public interface ILogic
     {
-        event EventHandler PositionsUpdated;
-
         Vector2 TableSize { get; }
 
+        event EventHandler? PositionsUpdated;
+        Task StartAsync();
+        Task StopAsync();
+        Task AddBallAsync(float x, float y, float vx, float vy, float radius, string color);
+
         void SetTableSize(float width, float height);
-        void Start();
-        void Stop();
-        void AddBall(float x, float y, float vx, float vy, float radius, string color);
         IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData();
     }
 }

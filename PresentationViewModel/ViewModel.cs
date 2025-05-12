@@ -32,9 +32,11 @@ namespace PresentationViewModel
 
         private void ExecuteGenerateBalls(object? parameter)
         {
-            GenerateBalls(BallCount);
+            Balls.Clear();
             _canGenerateBalls = false;
             (GenerateBallsCommand as RelayCommand)?.RaiseCanExecuteChanged();
+            
+            GenerateBalls(BallCount);
         }
 
         public void InitializeScreenSize(float screenWidth, float screenHeight)
@@ -61,7 +63,7 @@ namespace PresentationViewModel
 
             for (int i = 0; i < count; i++)
             {
-                _model.AddBall();
+                _model.AddBallAsync();
             }
         }
 

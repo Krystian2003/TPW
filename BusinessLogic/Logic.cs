@@ -11,33 +11,55 @@ namespace BusinessLogic
         public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
         private readonly IBallRepository _ballRepository;
-        private readonly Timer _updateTimer;
-        private const float UpdateInterval = 16.67f;
+        private CancellationTokenSource? _cts;
+        private readonly object _locker = new();
+
+        private const int UpdateInterval = 17;
         private const float DeltaTime = 0.01667f;
 
-    public Logic()
+        public Logic()
         {
             _ballRepository = new BallRepository();
 
-            _updateTimer = new Timer(UpdateInterval);
-            _updateTimer.Elapsed += OnTimerElapsed;
-            _updateTimer.AutoReset = true;
         }
 
-        public void Start()
+        public Task StartAsync()
         {
-            _updateTimer.Start();
+            if (_cts != null && !_cts.IsCancellationRequested)
+                return Task.CompletedTask;
+
+            _cts = new CancellationTokenSource();
+            return Task.Run(UpdateLoopAsync, _cts.Token);
         }
 
-        public void Stop()
+        public Task StopAsync()
         {
-            _updateTimer.Stop();
+            _cts?.Cancel();
+            return Task.CompletedTask;
         }
 
-        internal void OnTimerElapsed(object? sender, ElapsedEventArgs e)
+        private async Task UpdateLoopAsync()
         {
-            UpdateBallPositions(DeltaTime);
-            PositionsUpdated?.Invoke(this, EventArgs.Empty);
+            var token = _cts!.Token;
+            while (!token.IsCancellationRequested)
+            {
+                lock (_locker)
+                {
+                    UpdateBallPositions(DeltaTime);
+                }
+                PositionsUpdated?.Invoke(this, EventArgs.Empty);
+                try { await Task.Delay(UpdateInterval, token); }
+                catch (TaskCanceledException) { break; }
+            }
+        }
+
+        public Task AddBallAsync(float x, float y, float vx, float vy, float radius, string color)
+        {
+            return Task.Run(() =>
+            {
+                lock (_locker)
+                    _ballRepository.AddBall(x, y, vx, vy, radius, color);
+            });
         }
 
         public void SetTableSize(float width, float height)
@@ -74,11 +96,6 @@ namespace BusinessLogic
                         BallCollision(ball1, ball2);
                     }
                 }
-        }
-
-        public void AddBall(float x, float y, float vx, float vy, float radius, string color)
-        {
-            _ballRepository.AddBall(x, y, vx, vy, radius, color);
         }
 
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
