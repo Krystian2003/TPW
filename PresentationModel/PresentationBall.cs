@@ -7,6 +7,7 @@ namespace PresentationModel
     {
         private double _x;
         private double _y;
+        private double _radius;
 
         public double CanvasLeft => X - Radius;
         public double CanvasTop => Y - Radius;
@@ -40,14 +41,47 @@ namespace PresentationModel
             }
         }
 
-        public double Radius { get; }
+        public double Radius
+        {
+            get => _radius;
+            set
+            {
+                if (_radius != value)
+                {
+                    _radius = value;
+                    OnPropertyChanged(nameof(Radius));
+                    OnPropertyChanged(nameof(Diameter));
+                    OnPropertyChanged(nameof(CanvasLeft));
+                    OnPropertyChanged(nameof(CanvasTop));
+                }
+            }
+        }
+
         public string Color { get; }
+
+        public double ReferenceX { get; set; }
+        public double ReferenceY { get; set; }
+        public double ReferenceRadius { get; set; }
+
+        public void UpdateScaledValues(double scale)
+        {
+            X = ReferenceX * scale;
+            Y = ReferenceY * scale;
+            Radius = ReferenceRadius * scale;
+            OnPropertyChanged(nameof(Radius));
+            OnPropertyChanged(nameof(Diameter));
+            OnPropertyChanged(nameof(CanvasLeft));
+            OnPropertyChanged(nameof(CanvasTop));
+        }
 
         public PresentationBall(double x, double y, double radius, string color)
         {
+            ReferenceX = x;
+            ReferenceY = y;
+            ReferenceRadius = radius;
             _x = x;
             _y = y;
-            Radius = radius;
+            _radius = radius;
             Color = color;
         }
 

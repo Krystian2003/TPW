@@ -20,7 +20,6 @@ namespace BusinessLogic
         public Logic()
         {
             _ballRepository = new BallRepository();
-
         }
 
         public Task StartAsync()

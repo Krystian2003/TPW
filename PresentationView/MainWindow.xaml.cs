@@ -12,6 +12,16 @@ namespace PresentationView
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
+
+            canvas.SizeChanged += Canvas_SizeChanged;
+        }
+
+        private void Canvas_SizeChanged(object? sender, SizeChangedEventArgs e)
+        {
+            _viewModel.SetTableSize(
+                (float)canvas.ActualWidth,
+                (float)canvas.ActualHeight
+            );
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

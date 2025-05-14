@@ -56,8 +56,10 @@ namespace PresentationModel
             int count = Math.Min(Balls.Count, ballsData.Count);
             for (int i = 0; i < count; i++)
             {
-                Balls[i].X = ballsData[i].Position.X;
-                Balls[i].Y = ballsData[i].Position.Y;
+                Balls[i].ReferenceX = ballsData[i].Position.X / _scale;
+                Balls[i].ReferenceY = ballsData[i].Position.Y / _scale;
+                Balls[i].ReferenceRadius = ballsData[i].Radius / _scale;
+                Balls[i].UpdateScaledValues(_scale);
             }
         }
 
@@ -66,6 +68,7 @@ namespace PresentationModel
             _canvasWidth = width;
             _canvasHeight = height;
             RecalculateScale();
+            RescaleBalls();
             _logic.SetTableSize(_canvasWidth, _canvasHeight);
         }
 
@@ -75,12 +78,21 @@ namespace PresentationModel
             _canvasWidth = (float)(_canvasHeight * AspectRatio);
 
             RecalculateScale();
+            RescaleBalls();
             _logic.SetTableSize(_canvasWidth, _canvasHeight);
         }
 
         private void RecalculateScale()
         {
             _scale = _canvasHeight / (float)ReferenceHeight;
+        }
+
+        private void RescaleBalls()
+        {
+            foreach (var ball in Balls)
+            {
+                ball.UpdateScaledValues(_scale);
+            }
         }
 
         public async void AddBallAsync()
@@ -92,29 +104,35 @@ namespace PresentationModel
             string color = colors[_rand.Next(colors.Length)];
 
             float radius = _rand.NextSingle() * (MaxBallRadius - MinBallRadius) + MinBallRadius;
-            float scaledRadius = radius * _scale;
-
             float x, y;
             bool overlaps;
             do
             {
-                x = _rand.NextSingle() * (_canvasWidth - 2 * scaledRadius) + scaledRadius;
-                y = _rand.NextSingle() * (_canvasHeight - 2 * scaledRadius) + scaledRadius;
+                x = _rand.NextSingle() * ((float)ReferenceWidth - 2 * radius) + radius;
+                y = _rand.NextSingle() * ((float)ReferenceHeight - 2 * radius) + radius;
                 overlaps = Balls.Any(b =>
-                    Math.Sqrt((b.X - x) * (b.X - x) + (b.Y - y) * (b.Y - y)) < (b.Radius + scaledRadius));
+                    Math.Sqrt((b.ReferenceX - x) * (b.ReferenceX - x) + (b.ReferenceY - y) * (b.ReferenceY - y)) < (b.ReferenceRadius + radius));
             } while (overlaps);
 
+            float scaledX = x * _scale;
+            float scaledY = y * _scale;
             float scaledVx = vx * _scale;
             float scaledVy = vy * _scale;
+            float scaledRadius = radius * _scale;
 
-            await _logic.AddBallAsync(x, y, scaledVx, scaledVy, scaledRadius, color);
-            Balls.Add(new PresentationBall(x, y, scaledRadius, color));
+            await _logic.AddBallAsync(scaledX, scaledY, scaledVx, scaledVy, scaledRadius, color);
+            Balls.Add(new PresentationBall(x, y, radius, color) { X = scaledX, Y = scaledY, Radius = scaledRadius });
         }
 
         public async void AddBallAsync(float x, float y, float vx, float vy, float radius, string color)
         {
-            await _logic.AddBallAsync(x, y, vx, vy, radius, color);
-            Balls.Add(new PresentationBall(x, y, radius, color));
+            float scaledX = x * _scale;
+            float scaledY = y * _scale;
+            float scaledVx = vx * _scale;
+            float scaledVy = vy * _scale;
+            float scaledRadius = radius * _scale;
+            await _logic.AddBallAsync(scaledX, scaledY, scaledVx, scaledVy, scaledRadius, color);
+            Balls.Add(new PresentationBall(x, y, radius, color) { X = scaledX, Y = scaledY, Radius = scaledRadius });
         }
 
         public float GetCanvasWidth() => _canvasWidth;
