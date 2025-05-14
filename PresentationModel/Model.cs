@@ -1,9 +1,5 @@
 ﻿using BusinessLogic;
-using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Numerics;
 
 namespace PresentationModel
 {
@@ -60,6 +56,8 @@ namespace PresentationModel
                 Balls[i].ReferenceY = ballsData[i].Position.Y / _scale;
                 Balls[i].ReferenceRadius = ballsData[i].Radius / _scale;
                 Balls[i].UpdateScaledValues(_scale);
+                Balls[i].X = ballsData[i].Position.X;
+                Balls[i].Y = ballsData[i].Position.Y;
             }
         }
 
@@ -95,7 +93,7 @@ namespace PresentationModel
             }
         }
 
-        public async void AddBallAsync()
+        public async Task AddBallAsync()
         {
             float vx = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
             float vy = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
@@ -124,7 +122,7 @@ namespace PresentationModel
             Balls.Add(new PresentationBall(x, y, radius, color) { X = scaledX, Y = scaledY, Radius = scaledRadius });
         }
 
-        public async void AddBallAsync(float x, float y, float vx, float vy, float radius, string color)
+        public async Task AddBallAsync(float x, float y, float vx, float vy, float radius, string color)
         {
             float scaledX = x * _scale;
             float scaledY = y * _scale;

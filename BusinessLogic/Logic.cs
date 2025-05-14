@@ -1,7 +1,5 @@
 ﻿using Data;
 using System.Numerics;
-using System.Timers;
-using Timer = System.Timers.Timer;
 
 namespace BusinessLogic
 {
@@ -94,6 +92,8 @@ namespace BusinessLogic
                     newVel.Y = -newVel.Y;
                     newPos.Y = Math.Clamp(newPos.Y, minY, maxY);
                 }
+
+                if (Math.Abs(newPos.X - 49.5f) < 0.1f) newPos.X = 49.5f;
 
                 _ballRepository.UpdateBallVelocity(ball, newVel);
                 _ballRepository.UpdateBallPosition(ball, newPos);

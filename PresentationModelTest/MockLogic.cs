@@ -1,11 +1,5 @@
 ﻿using BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PresentationModelTest
 {
@@ -18,13 +12,26 @@ namespace PresentationModelTest
         public List<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> BallsData { get; } = new();
         public Vector2 TableSize { get; set; } = new Vector2(800, 400);
 
-        public event EventHandler PositionsUpdated;
+        public event EventHandler? PositionsUpdated;
 
-        public void Start() => StartCalled = true;
-        public void Stop() => StopCalled = true;
+        public Task StartAsync()
+        {
+            StartCalled = true;
+            return Task.CompletedTask;
+        }
 
-        public void AddBall(float x, float y, float vx, float vy, float radius, string color)
-            => AddedBalls.Add((x, y, vx, vy, radius, color));
+        public Task StopAsync()
+        {
+            StopCalled = true;
+            return Task.CompletedTask;
+        }
+
+        public Task AddBallAsync(float x, float y, float vx, float vy, float radius, string color)
+        {
+            AddedBalls.Add((x, y, vx, vy, radius, color));
+            BallsData.Add((new Vector2(x,y), new Vector2(vx,vy), radius, color));
+            return Task.CompletedTask;
+        }
 
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
         {

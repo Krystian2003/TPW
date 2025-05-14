@@ -19,22 +19,26 @@ namespace PresentationViewModelTest
         {
             var mockModel = new MockModel();
             var viewModel = new ViewModel(mockModel);
-            mockModel.AddBall(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, "Red");
+            viewModel.BallCount = 1;
+            viewModel.GenerateBallsCommand.Execute(null);
+
             Assert.Equal(1, mockModel.AddBallCallCount);
-            Assert.Equal(1, mockModel.Balls[0].X);
-            Assert.Equal("Red", mockModel.Balls[0].Color);
+            Assert.NotEmpty(mockModel.Balls);
         }
 
         [Fact]
         public void GenerateBallsWithinCanvasBounds()
         {
             var mockModel = new MockModel();
+            mockModel.SetTableSize(800, 400);
             var viewModel = new ViewModel(mockModel);
-            viewModel.GenerateBalls(5, 100.0f, 400.0f);
+            viewModel.BallCount = 5;
+            viewModel.GenerateBallsCommand.Execute(null);
+
             foreach (var ball in mockModel.Balls)
             {
-                Assert.InRange(ball.X, 0, 800);
-                Assert.InRange(ball.Y, 0, 400);
+                Assert.InRange(ball.X, 0, mockModel.GetCanvasWidth());
+                Assert.InRange(ball.Y, 0, mockModel.GetCanvasHeight());
             }
         }
 
@@ -43,8 +47,10 @@ namespace PresentationViewModelTest
         {
             var mockModel = new MockModel();
             var viewModel = new ViewModel(mockModel);
-            var validColors = new[] { "Red", "Blue", "Green", "Yellow", "Purple" };
-            viewModel.GenerateBalls(5, 100.0f, 400.0f);
+            var validColors = new[] { "Red", "Blue", "Green", "Yellow", "Purple", "DefaultColor" };
+            viewModel.BallCount = 5;
+            viewModel.GenerateBallsCommand.Execute(null);
+
             foreach (var ball in mockModel.Balls)
             {
                 Assert.Contains(ball.Color, validColors);

@@ -2,10 +2,10 @@
 
 namespace PresentationModelTest
 {
-    public class PresentationBallTest
+    public class PresentationBallTests
     {
         [Fact]
-        private void ConstructorTest()
+        public void ConstructorTest()
         {
             var ball = new PresentationBall(10.0f, 20.0f, 15.0f, "Red");
 
@@ -16,27 +16,33 @@ namespace PresentationModelTest
         }
 
         [Fact]
-        private void PropertyXChangedTest()
+        public void PropertyXChangedTest()
         {
             var ball = new PresentationBall(10.0f, 20.0f, 15.0f, "Red");
-            bool eventRaisedX = false;
-            bool eventRaisedY = false;
-            ball.PropertyChanged += (s, e) => eventRaisedX = true;
+            string? changedPropertyName = null;
+            ball.PropertyChanged += (sender, e) =>
+            {
+                changedPropertyName = e.PropertyName;
+            };
             ball.X = 30.0f;
-            Assert.True(eventRaisedX);
-            Assert.False(eventRaisedY);
+            Assert.Equal(30.0f, ball.X);
+            Assert.NotNull(changedPropertyName);
+            Assert.Equal("CanvasLeft", changedPropertyName);
         }
 
         [Fact]
-        private void PropertyYChangedTest()
+        public void PropertyYChangedTest()
         {
             var ball = new PresentationBall(10.0f, 20.0f, 15.0f, "Red");
-            bool eventRaisedX = false;
-            bool eventRaisedY = false;
-            ball.PropertyChanged += (s, e) => eventRaisedY = true;
+            string? changedPropertyName = null;
+            ball.PropertyChanged += (sender, e) =>
+            {
+                changedPropertyName = e.PropertyName;
+            };
             ball.Y = 30.0f;
-            Assert.True(eventRaisedY);
-            Assert.False(eventRaisedX);
+            Assert.Equal(30.0f, ball.Y);
+            Assert.NotNull(changedPropertyName);
+            Assert.Equal("CanvasTop", changedPropertyName);
         }
     }
 }
