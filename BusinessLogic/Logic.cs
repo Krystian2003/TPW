@@ -1,7 +1,7 @@
 ﻿using Data;
 using System.Numerics;
 
-namespace BusinessLogic
+namespace Logic
 {
     public class Logic : ILogic
     {

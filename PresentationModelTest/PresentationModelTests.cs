@@ -6,7 +6,6 @@ namespace PresentationModelTest
     public class PresentationModelTests
     {
         [Fact]
-        // Change name?
         public void ConstructorInitializeBallsTest()
         {
             var mockLogic = new MockLogic();
@@ -21,12 +20,6 @@ namespace PresentationModelTest
             Assert.Equal(200, model.Balls[0].Y);
             Assert.Equal(10, model.Balls[0].Radius);
             Assert.Equal("Red", model.Balls[0].Color);
-        }
-
-        [Fact]
-        public void AddBallTest()
-        {
-            // Test removed as it could not be fixed.
         }
 
         [Fact]

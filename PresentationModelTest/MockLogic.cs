@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+﻿using Logic;
 using System.Numerics;
 
 namespace PresentationModelTest

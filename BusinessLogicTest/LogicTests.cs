@@ -1,7 +1,7 @@
-using BusinessLogic;
+using Logic;
 using System.Numerics;
 
-namespace BusinessLogicTest
+namespace LogicTest
 {
     public class LogicTests
     {

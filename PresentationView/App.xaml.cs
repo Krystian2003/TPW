@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+﻿using Logic;
 using PresentationModel;
 using PresentationViewModel;
 using System.Windows;
@@ -11,7 +11,7 @@ namespace PresentationView
         {
             base.OnStartup(e);
 
-            ILogic logic = new Logic();
+            ILogic logic = new Logic.Logic();
             IModel model = new Model(logic);
             ViewModel viewModel = new ViewModel(model);
 

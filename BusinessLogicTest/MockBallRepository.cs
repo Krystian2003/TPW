@@ -1,7 +1,7 @@
 ﻿using Data;
 using System.Numerics;
 
-namespace BusinessLogicTest
+namespace LogicTest
 {
     internal class MockBallRepository : IBallRepository
     {
