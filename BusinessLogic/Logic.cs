@@ -13,7 +13,7 @@ namespace Logic
         private readonly object _locker = new();
 
         private const int UpdateInterval = 17;
-        private const float DeltaTime = 0.01667f;
+        private const float DeltaTime = 0.017f;
 
         public Logic()
         {
@@ -73,7 +73,8 @@ namespace Logic
 
             foreach (var ball in balls)
             {
-                Vector2 newPos = ball.Position + ball.Velocity * deltaTime;
+                ball.Move(deltaTime);
+                Vector2 newPos = ball.Position;
                 Vector2 newVel = ball.Velocity;
 
                 float minX = ball.Radius;
@@ -85,18 +86,17 @@ namespace Logic
                 {
                     newVel.X = -newVel.X;
                     newPos.X = Math.Clamp(newPos.X, minX, maxX);
+                    _ballRepository.UpdateBallPosition(ball, newPos);
                 }
 
                 if (newPos.Y < minY || newPos.Y > maxY)
                 {
                     newVel.Y = -newVel.Y;
                     newPos.Y = Math.Clamp(newPos.Y, minY, maxY);
+                    _ballRepository.UpdateBallPosition(ball, newPos);
                 }
 
-                if (Math.Abs(newPos.X - 49.5f) < 0.1f) newPos.X = 49.5f;
-
                 _ballRepository.UpdateBallVelocity(ball, newVel);
-                _ballRepository.UpdateBallPosition(ball, newPos);
             }
 
             for (int i = 0; i < balls.Count; i++)
@@ -111,19 +111,17 @@ namespace Logic
 
                     if (distSq <= radii * radii)
                     {
-                    BallCollision(b1, b2);
+                        BallCollision(b1, b2);
 
-                    if (dist > 0f)
-                    {
                         float overlap = radii - dist;
-                        Vector2 n = delta / dist;  
+                        Vector2 n = delta / dist;
                         Vector2 p1 = b1.Position +  n * (overlap / 2.0f);
                         Vector2 p2 = b2.Position -  n * (overlap / 2.0f);
                         _ballRepository.UpdateBallPosition(b1, p1);
                         _ballRepository.UpdateBallPosition(b2, p2);
+
                     }
-                }   
-            }
+                }
         }
 
         public IEnumerable<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> GetBallsData()
@@ -146,7 +144,7 @@ namespace Logic
             Vector2 velDiff1 = ball1.Velocity - ball2.Velocity;
             float dotProduct = Vector2.Dot(posDiff, velDiff1);
 
-            if(dotProduct >= 0)
+            if (dotProduct >= 0)
                 return;
 
             Vector2 impulse = (2 * dotProduct / (mass1 + mass2)) * posDiff / distanceSquared;
