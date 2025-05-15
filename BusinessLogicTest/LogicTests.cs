@@ -8,7 +8,7 @@ namespace LogicTest
         [Fact]
         public async Task AddBallTest()
         {
-            var logic = new Logic();
+            var logic = new Logic.Logic();
             await logic.AddBallAsync(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red");
 
             var balls = logic.GetBallsData().ToList();
@@ -22,7 +22,7 @@ namespace LogicTest
         [Fact]
         public async Task UpdateBallPositionTest()
         {
-            var logic = new Logic();
+            var logic = new Logic.Logic();
             await logic.AddBallAsync(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red");
 
             logic.UpdateBallPositions(1.0f); 
@@ -34,7 +34,7 @@ namespace LogicTest
         [Fact]
         public async Task RightWallCollisionTest()
         {
-            var logic = new Logic();
+            var logic = new Logic.Logic();
             logic.SetTableSize(100.0f, 100.0f);
             await logic.AddBallAsync(95.0f, 50.0f, 10.0f, 0.0f, 5.0f, "Red");
 
@@ -50,7 +50,7 @@ namespace LogicTest
         [Fact]
         public async Task TwoBallsCollisionTest()
         {
-            var logic = new Logic();
+            var logic = new Logic.Logic();
             logic.SetTableSize(200.0f, 200.0f);
 
             await logic.AddBallAsync(50.0f, 50.0f, 5.0f, 0.0f, 10.0f, "Red");
@@ -71,7 +71,7 @@ namespace LogicTest
         [Fact]
         public void SetTableSizeTest()
         {
-            var logic = new Logic();
+            var logic = new Logic.Logic();
             logic.SetTableSize(200.0f, 150.0f);
 
             Assert.Equal(new Vector2(200.0f, 150.0f), logic.TableSize);
@@ -80,7 +80,7 @@ namespace LogicTest
         [Fact]
         public void SetTableSizeNegativeTest()
         {
-            var logic = new Logic();
+            var logic = new Logic.Logic();
             Assert.Throws<ArgumentException>(() => logic.SetTableSize(-100.0f, 50.0f));
             Assert.Throws<ArgumentException>(() => logic.SetTableSize(100.0f, -50.0f));
         }
