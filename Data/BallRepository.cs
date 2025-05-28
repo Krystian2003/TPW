@@ -4,6 +4,7 @@ namespace Data
 {
     public class BallRepository : IBallRepository
     {
+        private readonly BallLogger _logger = new("ball_data.log");
         private readonly List<Ball> _balls = new();
         private readonly object _locker = new();
 
@@ -20,6 +21,7 @@ namespace Data
             lock (_locker)
             {
                 _balls.Add(new Ball(x, y, vx, vy, radius, color));
+                _logger.Log($"Added ball pos={x},{y} vel={vx},{vy} r={radius} c={color}");
             }
         }
 
@@ -28,6 +30,7 @@ namespace Data
             lock (_locker)
             {
                 _balls.Add(ball);
+                _logger.Log($"Added ball pos={ball.Position.X},{ball.Position.Y} vel={ball.Velocity.X},{ball.Velocity.Y} r={ball.Radius} c={ball.Color}");
             }
         }
 
@@ -47,6 +50,7 @@ namespace Data
                 if (index != -1)
                 {
                     _balls[index].Position = newPosition;
+                    _logger.Log($"New pos={newPosition.X},{newPosition.Y}");
                 }
             }
         }
@@ -59,6 +63,7 @@ namespace Data
                 if (index != -1)
                 {
                     _balls[index].UpdateVelocity(newVelocity);
+                    _logger.Log($"New vel={newVelocity.X},{newVelocity.Y}");
                 }
             }
         }

@@ -22,5 +22,10 @@ namespace Data
         {
             Velocity = newVelocity;
         }
+
+        public void Move(float deltaTime)
+        {
+            Position += Velocity * deltaTime;
+        }
     }
 }
