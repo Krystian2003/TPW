@@ -1,5 +1,6 @@
 ﻿using Logic;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PresentationModel
 {
@@ -49,16 +50,19 @@ namespace PresentationModel
         private void OnPositionsUpdated(object? sender, EventArgs e)
         {
             var ballsData = _logic.GetBallsData().ToList();
-            int count = Math.Min(Balls.Count, ballsData.Count);
-            for (int i = 0; i < count; i++)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                Balls[i].ReferenceX = ballsData[i].Position.X / _scale;
-                Balls[i].ReferenceY = ballsData[i].Position.Y / _scale;
-                Balls[i].ReferenceRadius = ballsData[i].Radius / _scale;
-                Balls[i].UpdateScaledValues(_scale);
-                Balls[i].X = ballsData[i].Position.X;
-                Balls[i].Y = ballsData[i].Position.Y;
-            }
+                int count = Math.Min(Balls.Count, ballsData.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    Balls[i].ReferenceX = ballsData[i].Position.X / _scale;
+                    Balls[i].ReferenceY = ballsData[i].Position.Y / _scale;
+                    Balls[i].ReferenceRadius = ballsData[i].Radius / _scale;
+                    Balls[i].UpdateScaledValues(_scale);
+                    Balls[i].X = ballsData[i].Position.X;
+                    Balls[i].Y = ballsData[i].Position.Y;
+                }
+            });
         }
 
         public void SetTableSize(float width, float height)
