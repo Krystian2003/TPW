@@ -73,7 +73,16 @@ namespace Logic
 
             foreach (var ball in balls)
             {
+                Vector2 originalPosition = ball.Position;
+                
                 ball.Move(deltaTime);
+
+                // :/
+                if (originalPosition != ball.Position)
+                {
+                    _ballRepository.UpdateBallPosition(ball, ball.Position);
+                }
+                
                 Vector2 newPos = ball.Position;
                 Vector2 newVel = ball.Velocity;
 

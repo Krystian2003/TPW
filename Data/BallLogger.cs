@@ -16,8 +16,11 @@ internal class BallLogger
         _writerTask = Task.Run(BackgroundWrite);
     }
 
-    public void Log(string line)
-        => _queue.Add(line);
+    public void Log(string line, int ballId)
+    {
+        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        _queue.Add($"[{timestamp}] Ball #{ballId}: {line}");
+    }
 
     private async Task BackgroundWrite()
     {
