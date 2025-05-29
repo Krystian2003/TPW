@@ -1,10 +1,12 @@
 ﻿using System.Numerics;
+using System;
+using System.IO;
 
 namespace Data
 {
     public class BallRepository : IBallRepository
     {
-        private readonly BallLogger _logger = new("ball_data.log");
+        private readonly BallLogger _logger = new(Path.Combine(AppContext.BaseDirectory, "logs"));
         private readonly List<Ball> _balls = new();
         private readonly object _locker = new();
 
