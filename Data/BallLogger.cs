@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Data;
 
-public class BallLogger : IDisposable
+public class BallLogger : IBallLogger, IDisposable
 {
     private readonly BlockingCollection<string> _queue = new();
     private readonly Task _writerTask;

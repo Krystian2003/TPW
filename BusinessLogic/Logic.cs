@@ -8,7 +8,7 @@ namespace Logic
         public event EventHandler? PositionsUpdated;
         public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
-        private readonly BallLogger _logger = new(Path.Combine(AppContext.BaseDirectory, "logs"));
+        private readonly IBallLogger _logger = new BallLogger(Path.Combine(AppContext.BaseDirectory, "logs"));
         private readonly IBallRepository _ballRepository;
         private CancellationTokenSource? _cts;
         private readonly object _locker = new();

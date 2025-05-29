@@ -2,7 +2,7 @@
 
 namespace Data
 {
-    public interface IBallRepository // Maybe change the name
+    public interface IBallRepository
     {
         IReadOnlyList<Ball> GetBalls();
         void AddBall(float x, float y, float vx, float vy, float radius, string color);

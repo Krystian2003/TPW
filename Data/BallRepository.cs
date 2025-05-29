@@ -6,11 +6,11 @@ namespace Data
 {
     public class BallRepository : IBallRepository
     {
-        private readonly BallLogger _logger;
+        private readonly IBallLogger _logger;
         private readonly List<Ball> _balls = new();
         private readonly object _locker = new();
 
-        public BallRepository(BallLogger logger)
+        public BallRepository(IBallLogger logger)
         {
             _logger = logger;
         }
