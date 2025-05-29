@@ -28,8 +28,8 @@
                     Command="{Binding GenerateBallsCommand}"/>
         </Grid>
 
-        <Canvas x:Name="canvas" Grid.Row="1" Background="DarkGreen">
-            <ItemsControl ItemsSource="{Binding Balls}" x:Name="ballsItemsControl">
+        <Canvas x:Name="Canvas" Grid.Row="1" Background="DarkGreen">
+            <ItemsControl ItemsSource="{Binding Balls}" x:Name="BallsItemsControl">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />
@@ -47,7 +47,7 @@
                                  Height="{Binding Diameter}"
                                  Fill="{Binding Color}"
                                  Stroke="Black"
-                                 StrokeThickness="1" />
+                                 StrokeThickness="1" d:DataContext="{d:DesignInstance }" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

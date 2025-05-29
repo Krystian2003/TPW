@@ -8,21 +8,16 @@ namespace Logic
         public event EventHandler? PositionsUpdated;
         public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
-        private readonly IBallRepository _ballRepository;
+        private readonly IBallRepository _ballRepository = new BallRepository();
         private CancellationTokenSource? _cts;
         private readonly object _locker = new();
 
         private const int UpdateInterval = 17;
         private const float DeltaTime = 0.017f;
 
-        public Logic()
-        {
-            _ballRepository = new BallRepository();
-        }
-
         public Task StartAsync()
         {
-            if (_cts != null && !_cts.IsCancellationRequested)
+            if (_cts is { IsCancellationRequested: false })
                 return Task.CompletedTask;
 
             _cts = new CancellationTokenSource();

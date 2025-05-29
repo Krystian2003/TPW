@@ -7,11 +7,11 @@ internal class BallLogger
 {
     private readonly BlockingCollection<string> _queue = new();
     private readonly Task _writerTask;
-    private readonly string path;
+    private readonly string _path;
 
     public BallLogger(string path)
     {
-        this.path = path;
+        this._path = path;
         File.WriteAllText(path, string.Empty, Encoding.ASCII);
         _writerTask = Task.Run(BackgroundWrite);
     }
@@ -24,7 +24,7 @@ internal class BallLogger
 
     private async Task BackgroundWrite()
     {
-        using var sw = new StreamWriter(path, true, Encoding.ASCII);
+        await using var sw = new StreamWriter(_path, true, Encoding.ASCII);
         foreach (var entry in _queue.GetConsumingEnumerable())
         {
             await sw.WriteLineAsync(entry);

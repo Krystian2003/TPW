@@ -3,11 +3,14 @@ using System.Runtime.CompilerServices;
 
 namespace PresentationModel
 {
-    public class PresentationBall : INotifyPropertyChanged
+    public sealed class PresentationBall(double x, double y, double radius, string color)
+        : INotifyPropertyChanged
     {
-        private double _x;
-        private double _y;
-        private double _radius;
+        private const double Tolerance = double.Epsilon; 
+        
+        private double _x = x;
+        private double _y = y;
+        private double _radius = radius;
 
         public double CanvasLeft => X - Radius;
         public double CanvasTop => Y - Radius;
@@ -18,10 +21,10 @@ namespace PresentationModel
             get => _x;
             set
             {
-                if (_x != value)
+                if (Math.Abs(_x - value) > Tolerance)
                 {
                     _x = value;
-                    OnPropertyChanged(nameof(X));
+                    OnPropertyChanged();
                     OnPropertyChanged(nameof(CanvasLeft));
                 }
             }
@@ -32,10 +35,10 @@ namespace PresentationModel
             get => _y;
             set
             {
-                if (_y != value)
+                if (Math.Abs(_y - value) > Tolerance)
                 {
                     _y = value;
-                    OnPropertyChanged(nameof(Y));
+                    OnPropertyChanged();
                     OnPropertyChanged(nameof(CanvasTop));
                 }
             }
@@ -46,10 +49,10 @@ namespace PresentationModel
             get => _radius;
             set
             {
-                if (_radius != value)
+                if (Math.Abs(_radius - value) > Tolerance)
                 {
                     _radius = value;
-                    OnPropertyChanged(nameof(Radius));
+                    OnPropertyChanged();
                     OnPropertyChanged(nameof(Diameter));
                     OnPropertyChanged(nameof(CanvasLeft));
                     OnPropertyChanged(nameof(CanvasTop));
@@ -57,11 +60,11 @@ namespace PresentationModel
             }
         }
 
-        public string Color { get; }
+        public string Color { get; } = color;
 
-        public double ReferenceX { get; set; }
-        public double ReferenceY { get; set; }
-        public double ReferenceRadius { get; set; }
+        public double ReferenceX { get; set; } = x;
+        public double ReferenceY { get; set; } = y;
+        public double ReferenceRadius { get; set; } = radius;
 
         public void UpdateScaledValues(double scale)
         {
@@ -74,19 +77,9 @@ namespace PresentationModel
             OnPropertyChanged(nameof(CanvasTop));
         }
 
-        public PresentationBall(double x, double y, double radius, string color)
-        {
-            ReferenceX = x;
-            ReferenceY = y;
-            ReferenceRadius = radius;
-            _x = x;
-            _y = y;
-            _radius = radius;
-            Color = color;
-        }
-
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

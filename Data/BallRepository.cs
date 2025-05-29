@@ -30,7 +30,9 @@ namespace Data
             lock (_locker)
             {
                 _balls.Add(ball);
-                _logger.Log($"ADD pos={ball.Position.X},{ball.Position.Y} vel={ball.Velocity.X},{ball.Velocity.Y} r={ball.Radius} c={ball.Color}", ball.Id);
+                _logger.Log($"ADD pos={ball.Position.X},{ball.Position.Y} " +
+                            $"vel={ball.Velocity.X},{ball.Velocity.Y} " +
+                            $"r={ball.Radius} c={ball.Color}", ball.Id);
             }
         }
 

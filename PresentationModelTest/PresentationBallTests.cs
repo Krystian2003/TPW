@@ -20,7 +20,7 @@ namespace PresentationModelTest
         {
             var ball = new PresentationBall(10.0f, 20.0f, 15.0f, "Red");
             string? changedPropertyName = null;
-            ball.PropertyChanged += (sender, e) =>
+            ball.PropertyChanged += (_, e) =>
             {
                 changedPropertyName = e.PropertyName;
             };
@@ -35,7 +35,7 @@ namespace PresentationModelTest
         {
             var ball = new PresentationBall(10.0f, 20.0f, 15.0f, "Red");
             string? changedPropertyName = null;
-            ball.PropertyChanged += (sender, e) =>
+            ball.PropertyChanged += (_, e) =>
             {
                 changedPropertyName = e.PropertyName;
             };

@@ -2,19 +2,13 @@
 
 namespace PresentationViewModel
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
+        : ICommand
     {
-        private readonly Action<object?> _execute;
-        private readonly Predicate<object?>? _canExecute;
-
-        public RelayCommand(Action<object?> execute, Predicate<object?>? canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
+        private readonly Action<object?> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
 
         public bool CanExecute(object? parameter)
-            => _canExecute?.Invoke(parameter) ?? true;
+            => canExecute?.Invoke(parameter) ?? true;
 
         public void Execute(object? parameter)
             => _execute(parameter);

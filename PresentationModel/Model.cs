@@ -6,15 +6,15 @@ namespace PresentationModel
 {
     public class Model : IModel
     {
-        private readonly string[] colors = { "Red", "Blue", "Green", "Yellow", "Purple" };
+        private readonly string[] _colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
         private const double ReferenceWidth = 1920.0;
         private const double ReferenceHeight = 1080.0;
         private const double CanvasHeightRatio = 0.6;
         private const double AspectRatio = 16.0 / 9.0;
         private const float MaxBallRadius = 50.0f;
         private const float MinBallRadius = 10.0f;
-        private const float maxVelocity = 600.0f;
-        private const float minVelocity = 200.0f;
+        private const float MaxVelocity = 600.0f;
+        private const float MinVelocity = 200.0f;
 
         private readonly ILogic _logic;
         private readonly Random _rand = new Random();
@@ -99,11 +99,11 @@ namespace PresentationModel
 
         public async Task AddBallAsync()
         {
-            float vx = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
-            float vy = (_rand.NextSingle() * (maxVelocity - minVelocity) + minVelocity);
+            float vx = (_rand.NextSingle() * (MaxVelocity - MinVelocity) + MinVelocity);
+            float vy = (_rand.NextSingle() * (MaxVelocity - MinVelocity) + MinVelocity);
             vx *= _rand.Next(2) == 0 ? 1 : -1;
             vy *= _rand.Next(2) == 0 ? 1 : -1;
-            string color = colors[_rand.Next(colors.Length)];
+            string color = _colors[_rand.Next(_colors.Length)];
 
             float radius = _rand.NextSingle() * (MaxBallRadius - MinBallRadius) + MinBallRadius;
             float x, y;

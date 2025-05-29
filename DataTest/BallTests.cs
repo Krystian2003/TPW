@@ -8,7 +8,7 @@ namespace DataTest
         [Fact]
         public void ConstructorTest()
         {
-            Ball ball = new Ball(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red");
+            var ball = new Ball(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red");
 
             Assert.Equal(10.0f, ball.Position.X);
             Assert.Equal(20.0f, ball.Position.Y);
@@ -21,8 +21,10 @@ namespace DataTest
         [Fact]
         public void SetVelocityTest()
         {
-            Ball ball = new Ball(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red");
-            ball.Velocity = new Vector2(7.0f, 8.0f);
+            var ball = new Ball(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red")
+            {
+                Velocity = new Vector2(7.0f, 8.0f)
+            };
             Assert.Equal(7.0f, ball.Velocity.X);
             Assert.Equal(8.0f, ball.Velocity.Y);
         }
@@ -30,8 +32,10 @@ namespace DataTest
         [Fact]
         public void SetPositionTest()
         {
-            Ball ball = new Ball(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red");
-            ball.Position = new Vector2(30.0f, 40.0f);
+            var ball = new Ball(10.0f, 20.0f, 5.0f, 6.0f, 15.0f, "Red")
+            {
+                Position = new Vector2(30.0f, 40.0f)
+            };
             Assert.Equal(30.0f, ball.Position.X);
             Assert.Equal(40.0f, ball.Position.Y);
         }

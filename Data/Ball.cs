@@ -5,7 +5,7 @@ namespace Data
     public class Ball
     {
         public int Id { get; }
-        private static int _nextId = 0;
+        private static int _nextId;
 
         public Vector2 Position { get; internal set; }
         public Vector2 Velocity { get; internal set; }

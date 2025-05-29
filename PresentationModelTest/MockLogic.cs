@@ -5,12 +5,12 @@ namespace PresentationModelTest
 {
     internal class MockLogic : ILogic
     {
-        public bool StartCalled { get; private set; } = false;
-        public bool StopCalled { get; private set; } = false;
-        public List<(float x, float y, float vx, float vy, float radius, string color)> AddedBalls { get; } = 
-            new List<(float x, float y, float vx, float vy, float radius, string color)>();
+        public bool StartCalled { get; private set; }
+
+        private List<(float x, float y, float vx, float vy, float radius, string color)> AddedBalls { get; } =
+            [];
         public List<(Vector2 Position, Vector2 Velocity, float Radius, string Color)> BallsData { get; } = new();
-        public Vector2 TableSize { get; set; } = new Vector2(800, 400);
+        public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
         public event EventHandler? PositionsUpdated;
 
@@ -22,7 +22,6 @@ namespace PresentationModelTest
 
         public Task StopAsync()
         {
-            StopCalled = true;
             return Task.CompletedTask;
         }
 

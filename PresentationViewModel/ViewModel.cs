@@ -8,14 +8,10 @@ namespace PresentationViewModel
     {
         private const int MaxBallsAllowed = 100;
         private readonly IModel _model;
-        private readonly Random _rand = new Random();
         private bool _canGenerateBalls = true;
 
-        public float ScreenWidth { get; private set; }
-        public float ScreenHeight { get; private set; }
-
         public ObservableCollection<PresentationBall> Balls => _model.Balls;
-        public ICommand GenerateBallsCommand { get; private set; }
+        public ICommand GenerateBallsCommand { get; }
         public int BallCount { get; set; } = 10;
 
         public ViewModel(IModel model)
@@ -40,8 +36,6 @@ namespace PresentationViewModel
 
         public void InitializeScreenSize(float screenWidth, float screenHeight)
         {
-            ScreenWidth = screenWidth;
-            ScreenHeight = screenHeight;
             _model.InitializeScreenDimensions(screenWidth, screenHeight);
         }
 
@@ -50,7 +44,7 @@ namespace PresentationViewModel
             _model.SetTableSize(width, height);
         }
 
-        public void GenerateBalls(int count)
+        private void GenerateBalls(int count)
         {
             if (count <= 0)
                 throw new ArgumentException("Must be greater than 0", nameof(count));

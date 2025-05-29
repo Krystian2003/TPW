@@ -5,44 +5,44 @@ namespace LogicTest
 {
     internal class MockBallRepository : IBallRepository
     {
-        private readonly List<Ball> balls = new();
+        private readonly List<Ball> _balls = [];
 
         public void AddBall(float x, float y, float vx, float vy, float radius, string color)
         {
             var ball = new Ball(x, y, vx, vy, radius, color);
-            balls.Add(ball);
+            _balls.Add(ball);
         }
 
         public void AddBall(Ball ball)
         {
-            balls.Add(ball);
+            _balls.Add(ball);
         }
 
         public void Clear()
         {
-            balls.Clear();
+            _balls.Clear();
         }
 
         public IReadOnlyList<Ball> GetBalls()
         {
-            return balls.AsReadOnly();
+            return _balls.AsReadOnly();
         }
 
         public void UpdateBallPosition(Ball ball, Vector2 newPosition)
         {
-            var index = balls.IndexOf(ball);
+            var index = _balls.IndexOf(ball);
             if (index != -1)
             {
-                balls[index].Position = newPosition;
+                _balls[index].Position = newPosition;
             }
         }
 
         public void UpdateBallVelocity(Ball ball, Vector2 newVelocity)
         {
-            var index = balls.IndexOf(ball);
+            var index = _balls.IndexOf(ball);
             if (index != -1)
             {
-                balls[index].Velocity = newVelocity;
+                _balls[index].Velocity = newVelocity;
             }
         }
     }

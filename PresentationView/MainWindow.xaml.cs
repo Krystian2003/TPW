@@ -13,14 +13,14 @@ namespace PresentationView
             _viewModel = viewModel;
             DataContext = _viewModel;
 
-            canvas.SizeChanged += Canvas_SizeChanged;
+            Canvas.SizeChanged += Canvas_SizeChanged;
         }
 
         private void Canvas_SizeChanged(object? sender, SizeChangedEventArgs e)
         {
             _viewModel.SetTableSize(
-                (float)canvas.ActualWidth,
-                (float)canvas.ActualHeight
+                (float)Canvas.ActualWidth,
+                (float)Canvas.ActualHeight
             );
         }
 
@@ -30,7 +30,7 @@ namespace PresentationView
                 (float)SystemParameters.PrimaryScreenWidth,
                 (float)SystemParameters.PrimaryScreenHeight
             );
-            _viewModel.SetTableSize((float)canvas.ActualWidth, (float)canvas.ActualHeight);
+            _viewModel.SetTableSize((float)Canvas.ActualWidth, (float)Canvas.ActualHeight);
         }
     }
 }

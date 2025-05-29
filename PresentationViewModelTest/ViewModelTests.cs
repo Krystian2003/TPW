@@ -31,8 +31,10 @@ namespace PresentationViewModelTest
         {
             var mockModel = new MockModel();
             mockModel.SetTableSize(800, 400);
-            var viewModel = new ViewModel(mockModel);
-            viewModel.BallCount = 5;
+            var viewModel = new ViewModel(mockModel)
+            {
+                BallCount = 5
+            };
             viewModel.GenerateBallsCommand.Execute(null);
 
             foreach (var ball in mockModel.Balls)
