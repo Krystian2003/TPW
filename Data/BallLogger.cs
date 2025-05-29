@@ -11,7 +11,6 @@ public class BallLogger : IDisposable
     private readonly BlockingCollection<string> _queue = new();
     private readonly Task _writerTask;
     private readonly string _path;
-    private bool _isDisposed;
 
     public BallLogger(string directory)
     {
@@ -65,11 +64,18 @@ public class BallLogger : IDisposable
 
     private async Task BackgroundWrite()
     {
-
         await using var sw = new StreamWriter(_path, true, Encoding.ASCII);
         foreach (var entry in _queue.GetConsumingEnumerable())
         {
             await sw.WriteLineAsync(entry);
+            await sw.FlushAsync();
         }
+    }
+
+    public void Dispose()
+    {
+        _queue.CompleteAdding();
+        _writerTask.Wait();
+        _queue.Dispose();
     }
 }
