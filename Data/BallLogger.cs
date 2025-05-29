@@ -1,5 +1,7 @@
 using System.Collections.Concurrent;
 using System.Text;
+using System.IO;
+using System;
 
 namespace Data;
 
@@ -9,10 +11,11 @@ internal class BallLogger
     private readonly Task _writerTask;
     private readonly string _path;
 
-    public BallLogger(string path)
+    public BallLogger(string directory)
     {
-        this._path = path;
-        // File.WriteAllText(path, string.Empty, Encoding.ASCII);
+        Directory.CreateDirectory(directory);
+        string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss_fff");
+        this._path = Path.Combine(directory, $"ball_data_{timestamp}.log");
         _writerTask = Task.Run(BackgroundWrite);
     }
 
