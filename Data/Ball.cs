@@ -14,8 +14,6 @@ namespace Data
 
         internal Ball(float x, float y, float vx, float vy, float radius, string color)
         {
-            // Interlocked.Increment aby wszystkie kule miały unikatowe Id nawet 
-            //   jeśli były utworzone jednocześnie na różnych wątkach
             Id = Interlocked.Increment(ref _nextId);
             Position = new Vector2(x, y);
             Velocity = new Vector2(vx, vy);

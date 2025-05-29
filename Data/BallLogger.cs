@@ -33,10 +33,4 @@ internal class BallLogger
             await sw.WriteLineAsync(entry);
         }
     }
-
-    public async Task ShutdownAsync()
-    {
-        _queue.CompleteAdding();
-        await _writerTask;
-    }
 }
