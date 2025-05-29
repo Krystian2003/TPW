@@ -26,6 +26,7 @@ namespace PresentationModelTest
         public void ConstructorStartsLogic()
         {
             var mockLogic = new MockLogic();
+            var model = new Model(mockLogic);
             Assert.True(mockLogic.StartCalled);
         }
 

@@ -12,7 +12,7 @@ internal class BallLogger
     public BallLogger(string path)
     {
         this._path = path;
-        File.WriteAllText(path, string.Empty, Encoding.ASCII);
+        // File.WriteAllText(path, string.Empty, Encoding.ASCII);
         _writerTask = Task.Run(BackgroundWrite);
     }
 
