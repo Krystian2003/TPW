@@ -8,12 +8,18 @@ namespace Logic
         public event EventHandler? PositionsUpdated;
         public Vector2 TableSize { get; private set; } = new Vector2(800, 400);
 
-        private readonly IBallRepository _ballRepository = new BallRepository();
+        private readonly BallLogger _logger = new(Path.Combine(AppContext.BaseDirectory, "logs"));
+        private readonly IBallRepository _ballRepository;
         private CancellationTokenSource? _cts;
         private readonly object _locker = new();
 
         private const int UpdateInterval = 17;
         private const float DeltaTime = 0.017f;
+
+        public Logic()
+        {
+            _ballRepository = new BallRepository(_logger);
+        }
 
         public Task StartAsync()
         {
@@ -91,6 +97,7 @@ namespace Logic
                     newVel.X = -newVel.X;
                     newPos.X = Math.Clamp(newPos.X, minX, maxX);
                     _ballRepository.UpdateBallPosition(ball, newPos);
+                    _logger.LogWallXCollision(ball);
                 }
 
                 if (newPos.Y < minY || newPos.Y > maxY)
@@ -98,6 +105,7 @@ namespace Logic
                     newVel.Y = -newVel.Y;
                     newPos.Y = Math.Clamp(newPos.Y, minY, maxY);
                     _ballRepository.UpdateBallPosition(ball, newPos);
+                    _logger.LogWallYCollision(ball);
                 }
 
                 _ballRepository.UpdateBallVelocity(ball, newVel);
@@ -116,6 +124,8 @@ namespace Logic
                     if (distSq <= radii * radii)
                     {
                         BallCollision(b1, b2);
+                        _logger.Log(b1, b2);
+
 
                         float overlap = radii - dist;
                         Vector2 n = delta / dist;
